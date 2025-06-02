@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABS Academy - Learn Programming</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Section 1: Navigation and Logo -->
+    <header>
+        <div class="logo-container">
+            <img src="abs-academy.png" alt="ABS Academy Logo" class="logo">
+            <h1>ABS ACADEMY</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="admin-dashboard.html" class="admin-btn">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Section 2: Hero Banner with Logo and Quote -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <img src="abs-academy.png" alt="ABS Academy" class="hero-logo">
+            <h2>Advancing Beyond Standards</h2>
+            <p class="quote">"Empowering minds through technology education"</p>
+            <a href="#courses" class="cta-button">Explore Courses</a>
+        </div>
+    </section>
+
+    <!-- Section 3: Courses Grid -->
+    <section id="courses" class="courses-section">
+        <h2 class="section-title">Our Courses</h2>
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-icon"><i class="fab fa-html5"></i></div>
+                <h3>HTML</h3>
+                <p>Learn the fundamentals of web structure and markup language.</p>
+                <a href="html-course.html" class="course-btn">Learn More</a>
+            </div>
+            <div class="course-card">
+                <div class="course-icon"><i class="fab fa-css3-alt"></i></div>
+                <h3>CSS</h3>
+                <p>Master styling and layout techniques for modern websites.</p>
+                <a href="css-course.html" class="course-btn">Learn More</a>
+            </div>
+            <div class="course-card">
+                <div class="course-icon"><i class="fab fa-js"></i></div>
+                <h3>JavaScript</h3>
+                <p>Build interactive web applications with JavaScript.</p>
+                <a href="java-script.html" class="course-btn">Learn More</a>
+            </div>
+            <div class="course-card">
+                <div class="course-icon"><i class="fas fa-code"></i></div>
+                <h3>C Programming</h3>
+                <p>Learn the fundamentals of programming with C language.</p>
+                <a href="#" class="course-btn">Learn More</a>
+            </div>
+            <div class="course-card">
+                <div class="course-icon"><i class="fas fa-code"></i></div>
+                <h3>C++</h3>
+                <p>Master object-oriented programming with C++.</p>
+                <a href="#" class="course-btn">Learn More</a>
+            </div>
+            <div class="course-card">
+                <div class="course-icon"><i class="fab fa-python"></i></div>
+                <h3>Python</h3>
+                <p>Explore the versatile Python programming language.</p>
+                <a href="python-course.html" class="course-btn">Learn More</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Section 4: About Us -->
+    <section id="about" class="about-section">
+        <h2 class="section-title">About ABS Academy</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="abs-academy.png" alt="ABS Academy Campus">
+            </div>
+            <div class="about-text">
+                <h3>Our Mission</h3>
+                <p>At ABS Academy, we are dedicated to providing high-quality programming education that empowers students to excel in the tech industry. Our expert instructors and comprehensive curriculum ensure that you gain practical skills that are in demand.</p>
+                
+                <h3>Why Choose Us?</h3>
+                <ul>
+                    <li>Industry-experienced instructors</li>
+                    <li>Hands-on project-based learning</li>
+                    <li>Flexible learning options</li>
+                    <li>Career guidance and placement assistance</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Contact Us and Footer -->
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>online institution</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>7207025693</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>bhargavandhe202@gmail.com</p>
+                </div>
+                <div class="social-media">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="abs-academy.png" alt="ABS Academy">
+                <p>ABS Academy - Advancing Beyond Standards</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-courses">
+                <h3>Our Courses</h3>
+                <ul>
+                    <li><a href="html-course.html">HTML</a></li>
+                    <li><a href="css-course.html">CSS</a></li>
+                    <li><a href="java-script.html">JavaScript</a></li>
+                    <li><a href="c-language.html">C Programming</a></li>
+                    <li><a href="c++-language.html">C++</a></li>
+                    <li><a href="python-course.html">Python</a></li>
+                </ul>
+            </div>
+            
+        <div class="footer-bottom">
+            <p>&copy; 2025 ABS Academy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Dashboard Link (Hidden for regular users) -->
+    <div class="admin-access" style="display: none;">
+        <a href="admin-dashboard.html">Admin Dashboard</a>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

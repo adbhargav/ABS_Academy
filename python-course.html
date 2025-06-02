@@ -1,0 +1,4440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Course - ABS Academy</title>
+    <style>
+        /* Same CSS as provided in your HTML course, reused here for consistency */
+        /* Global Styles and Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    line-height: 1.6;
+    color: #2c3e50; /* --secondary-color */
+    background-color: #f8f9fa; /* --light-gray */
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* CSS Variables */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --accent-color: #e74c3c;
+    --light-gray: #f8f9fa;
+    --dark-gray: #7f8c8d;
+    --white: #ffffff;
+    --code-bg: #f1f1f1;
+    --success-color: #2ecc71;
+}
+
+/* Container */
+.container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 15px 20px 15px 0; /* Adjusted padding */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 70px;
+    box-sizing: border-box;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    background-color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+header h1 {
+    font-size: 1.5rem;
+}
+
+.header-buttons a {
+    color: var(--white);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.header-buttons a:hover {
+    opacity: 0.8;
+}
+
+.home-btn {
+    background-color: var(--secondary-color);
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background-color: var(--white);
+    padding: 20px 0;
+    overflow-y: auto;
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.sidebar h3 {
+    padding: 10px 20px;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    border-bottom: 1px solid var(--light-gray);
+    margin-bottom: 10px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar li {
+    padding: 8px 20px 8px 30px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+.sidebar li:hover {
+    background-color: var(--light-gray);
+}
+
+.sidebar li.active {
+    background-color: var(--light-gray);
+    border-left: 4px solid var(--primary-color);
+    font-weight: 600;
+}
+
+.sidebar li.active::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 80px;
+    left: 10px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    z-index: 999;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 90px 30px 30px 310px;
+    transition: padding 0.3s ease;
+}
+
+/* Topic */
+.topic {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: none;
+}
+
+.topic.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.topic h2 {
+    color: var(--secondary-color);
+    font-size: 2rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.topic h3 {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    margin: 25px 0 15px;
+}
+
+.topic p {
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.topic ul, .topic ol {
+    margin-bottom: 15px;
+    padding-left: 30px;
+}
+
+.topic li {
+    margin-bottom: 8px;
+}
+
+/* Code Examples */
+.code-example {
+    background-color: var(--code-bg);
+    border-left: 4px solid var(--primary-color);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.code-example pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.code-example code {
+    color: var(--secondary-color);
+}
+
+/* Example Output */
+.example-output {
+    background-color: var(--white);
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.example-output h4 {
+    margin-bottom: 10px;
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Try It Yourself */
+.try-it-yourself {
+    background-color: var(--light-gray);
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 25px 0;
+    border-radius: 8px;
+}
+
+.try-it-yourself h3 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.editor {
+    height: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    resize: vertical;
+    background-color: var(--white);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.run-btn {
+    background-color: var(--success-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    align-self: flex-start;
+    transition: background-color 0.3s;
+}
+
+.run-btn:hover {
+    background-color: #27ae60;
+}
+
+.result {
+    border: 1px solid #ddd;
+    padding: 15px;
+    min-height: 100px;
+    background-color: var(--white);
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Notes and Tips */
+.note, .tip, .warning {
+    padding: 15px 15px 15px 50px;
+    margin: 20px 0;
+    border-radius: 4px;
+    position: relative;
+}
+
+.note::before, .tip::before, .warning::before {
+    font-family: Arial, sans-serif;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    font-size: 1.5rem;
+}
+
+.note {
+    background-color: #e3f2fd;
+    border-left: 4px solid #2196f3;
+}
+
+.note::before {
+    content: "ℹ️";
+}
+
+.tip {
+    background-color: #e8f5e9;
+    border-left: 4px solid #4caf50;
+}
+
+.tip::before {
+    content: "💡";
+}
+
+.warning {
+    background-color: #fff3e0;
+    border-left: 4px solid #ff9800;
+}
+
+.warning::before {
+    content: "⚠️";
+}
+
+/* Navigation Buttons */
+.topic-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.nav-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+    background-color: #2980b9;
+}
+
+.nav-btn:disabled {
+    background-color: var(--dark-gray);
+    cursor: not-allowed;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: var(--white);
+    overflow-x: auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+tr:nth-child(even) {
+    background-color: var(--light-gray);
+}
+
+/* Images */
+.image-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.image-container img {
+    max-width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.image-caption {
+    margin-top: 10px;
+    color: var(--dark-gray);
+    font-style: italic;
+}
+
+/* Quiz Section */
+.quiz-container {
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 30px 0;
+    border: 1px solid #d1e3fa;
+}
+
+.quiz-container h3 {
+    color: var(--secondary-color);
+    margin-top: 0;
+}
+
+.quiz-question {
+    margin: 15px 0;
+}
+
+.quiz-options {
+    margin-top: 10px;
+}
+
+.quiz-option {
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: var(--white);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.quiz-option:hover {
+    background-color: #f1f1f1;
+}
+
+.quiz-option.selected {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.quiz-option.correct {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.quiz-option.incorrect {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.quiz-feedback {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+.quiz-feedback.correct {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    display: block;
+}
+
+.quiz-feedback.incorrect {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    display: block;
+}
+
+.check-answer-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.check-answer-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: var(--primary-color);
+    width: 0;
+    transition: width 0.5s ease;
+}
+
+/* Responsive Design and Media Queries */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+    }
+    .main-content {
+        padding-left: 270px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+        z-index: 990;
+        margin: 0;
+    }
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    .main-content {
+        padding: 90px 15px 15px 15px;
+        width: 100%;
+    }
+    .sidebar-toggle {
+        display: block;
+    }
+    header {
+        height: 60px;
+        padding: 10px 15px 10px 0;
+    }
+    .logo-container {
+        padding-left: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        height: 50px;
+        padding: 10px 10px 10px 0;
+    }
+    header h1 {
+        font-size: 1.2rem;
+    }
+    .logo {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+    .main-content {
+        padding: 70px 5px 5px 5px;
+    }
+    .topic {
+        padding: 15px;
+    }
+    .editor {
+        height: 150px;
+    }
+    .header-buttons a {
+        margin-left: 10px;
+        font-size: 0.9rem;
+    }
+    .sidebar {
+        top: 50px;
+    }
+    .sidebar-toggle {
+        top: 50px;
+    }
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+}
+
+body.dark-mode .sidebar,
+body.dark-mode .topic,
+body.dark-mode .example-output,
+body.dark-mode .result {
+    background-color: #2d2d2d;
+    color: #f0f0f0;
+}
+
+body.dark-mode .sidebar li:hover,
+body.dark-mode .sidebar li.active {
+    background-color: #3d3d3d;
+}
+
+body.dark-mode .code-example {
+    background-color: #3d3d3d;
+    border-left-color: #4dabf7;
+}
+
+body.dark-mode .code-example code {
+    color: #f0f0f0;
+}
+
+body.dark-mode table th {
+    background-color: #4dabf7;
+}
+
+body.dark-mode table td,
+body.dark-mode table th {
+    border-color: #444;
+}
+
+body.dark-mode tr:nth-child(even) {
+    background-color: #333;
+}
+
+body.dark-mode .note {
+    background-color: #2c3e50;
+    border-left-color: #3498db;
+}
+
+body.dark-mode .tip {
+    background-color: #27ae60;
+    border-left-color: #2ecc71;
+}
+
+body.dark-mode .warning {
+    background-color: #d35400;
+    border-left-color: #e67e22;
+}
+
+/* Print Styles */
+@media print {
+    header, .sidebar, .sidebar-toggle, .topic-navigation, .try-it-yourself {
+        display: none;
+    }
+    .main-content {
+        padding: 0;
+    }
+    .topic {
+        display: block !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none;
+    }
+}
+        /* Add remaining CSS from your HTML course as needed */
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">ABS</div>
+            <h1>Python Course</h1>
+        </div>
+        <div class="header-buttons">
+            <a href="#" id="dark-mode-toggle">Dark Mode</a>
+            <a href="index.html" class="home-btn">Back to Home</a>
+        </div>
+    </header>
+
+    <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <h3>Python Course</h3>
+            <ul id="topic-list">
+                <li class="active" data-topic="home">Python HOME</li>
+                <li data-topic="intro">Python Intro</li>
+                <li data-topic="getstarted">Python Get Started</li>
+                <li data-topic="syntax">Python Syntax</li>
+                <li data-topic="comments">Python Comments</li>
+                <li data-topic="variables">Python Variables</li>
+                <li data-topic="datatypes">Python Data Types</li>
+                <li data-topic="numbers">Python Numbers</li>
+                <li data-topic="casting">Python Casting</li>
+                <li data-topic="strings">Python Strings</li>
+                <li data-topic="booleans">Python Booleans</li>
+                <li data-topic="operators">Python Operators</li>
+                <li data-topic="lists">Python Lists</li>
+                <li data-topic="tuples">Python Tuples</li>
+                <li data-topic="sets">Python Sets</li>
+                <li data-topic="dictionaries">Python Dictionaries</li>
+                <li data-topic="ifelse">Python If...Else</li>
+                <li data-topic="whileloops">Python While Loops</li>
+                <li data-topic="forloops">Python For Loops</li>
+                <li data-topic="functions">Python Functions</li>
+                <li data-topic="lambda">Python Lambda</li>
+                <li data-topic="arrays">Python Arrays</li>
+                <li data-topic="classes">Python Classes/Objects</li>
+                <li data-topic="inheritance">Python Inheritance</li>
+                <li data-topic="iterators">Python Iterators</li>
+                <li data-topic="polymorphism">Python Polymorphism</li>
+                <li data-topic="scope">Python Scope</li>
+                <li data-topic="modules">Python Modules</li>
+                <li data-topic="dates">Python Dates</li>
+                <li data-topic="math">Python Math</li>
+                <li data-topic="json">Python JSON</li>
+                <li data-topic="regex">Python RegEx</li>
+                <li data-topic="pip">Python PIP</li>
+                <li data-topic="tryexcept">Python Try...Except</li>
+                <li data-topic="userinput">Python User Input</li>
+                <li data-topic="stringformat">Python String Formatting</li>
+                <li data-topic="filehandling">Python File Handling</li>
+                <li data-topic="readfiles">Python Read Files</li>
+                <li data-topic="writefiles">Python Write/Create Files</li>
+                <li data-topic="deletefiles">Python Delete Files</li>
+                <li data-topic="numpy">NumPy Tutorial</li>
+                <li data-topic="pandas">Pandas Tutorial</li>
+                <li data-topic="scipy">SciPy Tutorial</li>
+                <li data-topic="django">Django Tutorial</li>
+                <li data-topic="matplotlibintro">Matplotlib Intro</li>
+                <li data-topic="matplotlibstart">Matplotlib Get Started</li>
+                <li data-topic="matplotlibpyplot">Matplotlib Pyplot</li>
+                <li data-topic="matplotlibplotting">Matplotlib Plotting</li>
+                <li data-topic="matplotlibmarkers">Matplotlib Markers</li>
+                <li data-topic="matplotlibline">Matplotlib Line</li>
+                <li data-topic="matplotliblabels">Matplotlib Labels</li>
+                <li data-topic="matplotlibgrid">Matplotlib Grid</li>
+                <li data-topic="matplotlibsubplot">Matplotlib Subplot</li>
+                <li data-topic="matplotlibscatter">Matplotlib Scatter</li>
+                <li data-topic="matplotlibbars">Matplotlib Bars</li>
+                <li data-topic="matplotlibhistograms">Matplotlib Histograms</li>
+                <li data-topic="matplotlibpie">Matplotlib Pie Charts</li>
+                <li data-topic="mlstart">Machine Learning Getting Started</li>
+                <li data-topic="meanmedianmode">Mean Median Mode</li>
+                <li data-topic="standarddeviation">Standard Deviation</li>
+                <li data-topic="percentile">Percentile</li>
+                <li data-topic="datadistribution">Data Distribution</li>
+                <li data-topic="normaldistribution">Normal Data Distribution</li>
+                <li data-topic="scatterplot">Scatter Plot</li>
+                <li data-topic="linearregression">Linear Regression</li>
+                <li data-topic="polynomialregression">Polynomial Regression</li>
+                <li data-topic="multipleregression">Multiple Regression</li>
+                <li data-topic="scale">Scale</li>
+                <li data-topic="traintest">Train/Test</li>
+                <li data-topic="decisiontree">Decision Tree</li>
+                <li data-topic="confusionmatrix">Confusion Matrix</li>
+                <li data-topic="hierarchicalclustering">Hierarchical Clustering</li>
+                <li data-topic="logisticregression">Logistic Regression</li>
+                <li data-topic="gridsearch">Grid Search</li>
+                <li data-topic="categoricaldata">Categorical Data</li>
+                <li data-topic="kmeans">K-means</li>
+                <li data-topic="bootstrapaggregation">Bootstrap Aggregation</li>
+                <li data-topic="crossvalidation">Cross Validation</li>
+                <li data-topic="aucroc">AUC - ROC Curve</li>
+                <li data-topic="knn">K-nearest neighbors</li>
+                <li data-topic="mysqlstart">MySQL Get Started</li>
+                <li data-topic="mysqlcreatedb">MySQL Create Database</li>
+                <li data-topic="mysqlcreatetable">MySQL Create Table</li>
+                <li data-topic="mysqlinsert">MySQL Insert</li>
+                <li data-topic="mysqlselect">MySQL Select</li>
+                <li data-topic="mysqlwhere">MySQL Where</li>
+                <li data-topic="mysqlorderby">MySQL Order By</li>
+                <li data-topic="mysqldelete">MySQL Delete</li>
+                <li data-topic="mysqldroptable">MySQL Drop Table</li>
+                <li data-topic="mysqlupdate">MySQL Update</li>
+                <li data-topic="mysqllimit">MySQL Limit</li>
+                <li data-topic="mysqljoin">MySQL Join</li>
+                <li data-topic="mongodbstart">MongoDB Get Started</li>
+                <li data-topic="mongodbcreatedb">MongoDB Create DB</li>
+                <li data-topic="mongodbcollection">MongoDB Collection</li>
+                <li data-topic="mongodbinsert">MongoDB Insert</li>
+                <li data-topic="mongodbfind">MongoDB Find</li>
+                <li data-topic="mongodbquery">MongoDB Query</li>
+                <li data-topic="mongodbsort">MongoDB Sort</li>
+                <li data-topic="mongodbdelete">MongoDB Delete</li>
+                <li data-topic="mongodbdrop">MongoDB Drop Collection</li>
+                <li data-topic="mongodbupdate">MongoDB Update</li>
+                <li data-topic="mongodblimit">MongoDB Limit</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+
+            <!-- Python HOME -->
+            <div id="home" class="topic active">
+                <h2>Python HOME</h2>
+                <p>Welcome to the Python Course by ABS Academy! Python is a versatile, high-level programming language renowned for its readability, simplicity, and wide range of applications. It’s one of the most popular languages today, used by beginners and professionals alike.</p>
+            
+                <h3>History of Python</h3>
+                <p>Python was created by Guido van Rossum and first released in 1991. The language was designed with a focus on code readability, allowing developers to express concepts in fewer lines of code compared to languages like C++ or Java. Guido remained Python’s "Benevolent Dictator for Life" (BDFL) until stepping down in 2018, leaving the language’s development to a steering council.</p>
+            
+                <h3>Why Learn Python?</h3>
+                <ul>
+                    <li><strong>Simple and Readable Syntax</strong>: Python’s syntax is clean and intuitive, making it an excellent choice for beginners.</li>
+                    <li><strong>Extensive Libraries and Frameworks</strong>: With libraries like NumPy, Pandas, and Django, Python supports diverse tasks from data analysis to web development.</li>
+                    <li><strong>Versatile Applications</strong>: Python powers web development (e.g., Flask, Django), data science (e.g., Jupyter, TensorFlow), automation (e.g., scripting), artificial intelligence, game development, and more.</li>
+                    <li><strong>Cross-Platform</strong>: Python runs on Windows, macOS, Linux, and even mobile platforms.</li>
+                    <li><strong>Community and Support</strong>: A large, active community provides countless resources, tutorials, and third-party tools.</li>
+                </ul>
+            
+                <h3>Python in Action</h3>
+                <p>Here’s a basic example to get you started:</p>
+                <div class="code-example">
+                    <pre><code>print("Hello, World!")</code></pre>
+                </div>
+                <p>And here’s a slightly more advanced example showing Python’s ability to handle simple calculations:</p>
+                <div class="code-example">
+                    <pre><code># Calculate the area of a rectangle
+            length = 5
+            width = 3
+            area = length * width
+            print(f"The area of the rectangle is {area} square units")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>The area of the rectangle is 15 square units</pre>
+                </div>
+            
+                <h3>Who Uses Python?</h3>
+                <p>Python is used by major companies and organizations, including:</p>
+                <ul>
+                    <li><strong>Google</strong>: For web crawling and data processing.</li>
+                    <li><strong>Netflix</strong>: For recommendation algorithms and automation.</li>
+                    <li><strong>NASA</strong>: For scientific computing and simulations.</li>
+                    <li><strong>Instagram</strong>: For backend development using Django.</li>
+                </ul>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Modify the code below to calculate the area of a rectangle with a length of 10 and a width of 4:</p>
+                    <textarea class="editor" id="home-editor">length = 5
+            width = 3
+            area = length * width
+            print(f"The area is {area}")</textarea>
+                    <button class="run-btn" onclick="runCode('home-editor', 'home-result')">Run Code</button>
+                    <div class="result" id="home-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>What is Python best known for?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">Readable syntax</div>
+                        <div class="quiz-option" data-correct="false">Complex syntax</div>
+                        <div class="quiz-option" data-correct="false">Being the fastest language</div>
+                        <div class="quiz-option" data-correct="false">Low-level system programming</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> Python’s version history includes Python 2 (now deprecated) and Python 3, which is the current standard. This course focuses on Python 3.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" disabled>Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('intro')">Next</button>
+                </div>
+            </div>
+
+            <!-- Python Intro -->
+            <div id="intro" class="topic">
+                <h2>Python Intro</h2>
+                <p>Python is an interpreted, high-level, object-oriented programming language created by Guido van Rossum and first released in 1991. It’s designed to be easy to read and write, making it a favorite among developers of all skill levels.</p>
+            
+                <h3>Origins and Philosophy</h3>
+                <p>Guido van Rossum developed Python as a successor to the ABC language, aiming to create a language that prioritizes readability and simplicity. Python’s design philosophy is encapsulated in "The Zen of Python" (accessible by typing <code>import this</code> in a Python interpreter), which emphasizes principles like "Beautiful is better than ugly" and "Simple is better than complex."</p>
+            
+                <h3>Key Characteristics</h3>
+                <ul>
+                    <li><strong>Interpreted</strong>: Python code is executed line-by-line by an interpreter, eliminating the need for compilation.</li>
+                    <li><strong>Object-Oriented</strong>: Supports classes and objects for structured programming.</li>
+                    <li><strong>Dynamically Typed</strong>: No need to declare variable types; they are determined at runtime.</li>
+                    <li><strong>Indentation-Based</strong>: Uses whitespace to define code blocks, enforcing clean formatting.</li>
+                    <li><strong>Extensible</strong>: Can integrate with C/C++ for performance-critical tasks.</li>
+                </ul>
+            
+                <h3>Python in Practice</h3>
+                <p>Here’s a simple example demonstrating variables and string formatting:</p>
+                <div class="code-example">
+                    <pre><code># Simple Python program
+            name = "ABS Academy"
+            print(f"Welcome to {name}")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Welcome to ABS Academy</pre>
+                </div>
+            
+                <p>Here’s another example showing a basic function:</p>
+                <div class="code-example">
+                    <pre><code># Define and use a function
+            def greet(name):
+                return f"Hello, {name}!"
+            
+            print(greet("Student"))</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Hello, Student!</pre>
+                </div>
+            
+                <h3>Why Python Stands Out</h3>
+                <p>Python’s versatility makes it ideal for various domains:</p>
+                <ul>
+                    <li><strong>Education</strong>: Taught in schools and universities due to its gentle learning curve.</li>
+                    <li><strong>Scripting</strong>: Automates repetitive tasks (e.g., file renaming, data extraction).</li>
+                    <li><strong>Prototyping</strong>: Rapid development for testing ideas in startups and research.</li>
+                </ul>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Modify the code below to greet yourself by replacing "Python" with your name:</p>
+                    <textarea class="editor" id="intro-editor">print("Hello from Python!")</textarea>
+                    <button class="run-btn" onclick="runCode('intro-editor', 'intro-result')">Run Code</button>
+                    <div class="result" id="intro-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>Which of the following is a key feature of Python?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">Dynamic typing</div>
+                        <div class="quiz-option" data-correct="false">Static typing</div>
+                        <div class="quiz-option" data-correct="false">Compiled execution</div>
+                        <div class="quiz-option" data-correct="false">Curly brace syntax</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> Python’s interpreter runs code interactively, allowing you to test snippets in a REPL (Read-Eval-Print Loop) environment like IDLE or a terminal.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('home')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('getstarted')">Next</button>
+                </div>
+            </div>
+            <!-- Python Get Started -->
+            <div id="getstarted" class="topic">
+                <h2>Python Get Started</h2>
+                <p>Getting started with Python is straightforward! To begin, download Python from <a href="https://www.python.org" target="_blank">python.org</a> and run it using an Integrated Development Environment (IDE) like PyCharm, Visual Studio Code (VS Code), or even a simple text editor with a terminal.</p>
+            
+                <h3>Step-by-Step Installation</h3>
+                <ol>
+                    <li><strong>Download Python</strong>: Visit <a href="https://www.python.org/downloads/" target="_blank">python.org/downloads</a>, choose the latest Python 3 version (e.g., 3.11 as of 2023), and download the installer for your operating system (Windows, macOS, or Linux).</li>
+                    <li><strong>Install Python</strong>: Run the installer. On Windows, check "Add Python to PATH" to use it from the command line. On macOS/Linux, it’s typically added automatically.</li>
+                    <li><strong>Verify Installation</strong>: Open a terminal (Command Prompt, Terminal, etc.) and type <code>python --version</code> or <code>python3 --version</code>. You should see the installed version (e.g., "Python 3.11.0").</li>
+                </ol>
+            
+                <h3>Choosing Your Environment</h3>
+                <p>Python can be run in various ways:</p>
+                <ul>
+                    <li><strong>Python IDLE</strong>: Comes with Python; a simple editor for beginners.</li>
+                    <li><strong>VS Code</strong>: A popular, lightweight IDE with Python extensions for debugging and linting.</li>
+                    <li><strong>PyCharm</strong>: A powerful IDE for professional development with advanced features.</li>
+                    <li><strong>Terminal/Shell</strong>: Run scripts directly using <code>python script.py</code>.</li>
+                </ul>
+            
+                <h3>Your First Program</h3>
+                <p>Here’s a basic example to test your setup:</p>
+                <div class="code-example">
+                    <pre><code># First program
+            print("My first Python code")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>My first Python code</pre>
+                </div>
+            
+                <p>Here’s a slightly more interactive example:</p>
+                <div class="code-example">
+                    <pre><code># Ask for user input and respond
+            name = input("Enter your name: ")
+            print(f"Nice to meet you, {name}!")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Example Output:</h4>
+                    <pre>Enter your name: Alex
+            Nice to meet you, Alex!</pre>
+                </div>
+            
+                <h3>Tips for Beginners</h3>
+                <ul>
+                    <li>Save files with a <code>.py</code> extension (e.g., <code>first.py</code>).</li>
+                    <li>Use a consistent editor to build familiarity.</li>
+                    <li>Explore the Python interactive shell by typing <code>python</code> in your terminal.</li>
+                </ul>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Modify the code below to ask for a favorite color instead of a name:</p>
+                    <textarea class="editor" id="getstarted-editor">name = input("Enter your name: ")
+            print(f"Nice to meet you, {name}!")</textarea>
+                    <button class="run-btn" onclick="runCode('getstarted-editor', 'getstarted-result')">Run Code</button>
+                    <div class="result" id="getstarted-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>What command checks your Python version in the terminal?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">python --version</div>
+                        <div class="quiz-option" data-correct="false">python -v</div>
+                        <div class="quiz-option" data-correct="false">version python</div>
+                        <div class="quiz-option" data-correct="false">py --check</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> If <code>python --version</code> doesn’t work, try <code>python3 --version</code>, as some systems differentiate between Python 2 and 3.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('intro')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('syntax')">Next</button>
+                </div>
+            </div>
+
+            <!-- Python Syntax -->
+            <div id="syntax" class="topic">
+                <h2>Python Syntax</h2>
+                <p>Python uses indentation to define code blocks, unlike many other programming languages that rely on curly braces (<code>{}</code>) or keywords like <code>end</code>. This unique feature enforces readable and consistent code formatting.</p>
+            
+                <h3>Core Syntax Rules</h3>
+                <ul>
+                    <li><strong>Indentation</strong>: Use 4 spaces (by convention) to indent code blocks. Tabs are allowed but discouraged.</li>
+                    <li><strong>No Semicolons</strong>: Statements don’t require semicolons (<code>;</code>) to end lines, though they can separate multiple statements on one line.</li>
+                    <li><strong>Case Sensitivity</strong>: Python is case-sensitive (e.g., <code>Variable</code> ≠ <code>variable</code>).</li>
+                    <li><strong>Line-Based Execution</strong>: Each line is a statement, unless continued with a backslash (<code>\</code>) or wrapped in parentheses.</li>
+                </ul>
+            
+                <h3>Indentation in Action</h3>
+                <p>Here’s an example using an <code>if</code> statement to demonstrate indentation:</p>
+                <div class="code-example">
+                    <pre><code>if 5 > 2:
+                print("Five is greater than two")
+            else:
+                print("This won't run")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Five is greater than two</pre>
+                </div>
+            
+                <p>Here’s a more complex example with nested blocks:</p>
+                <div class="code-example">
+                    <pre><code># Nested indentation
+            x = 10
+            if x > 0:
+                print("x is positive")
+                if x > 5:
+                    print("x is also greater than 5")
+            else:
+                print("x is not positive")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>x is positive
+            x is also greater than 5</pre>
+                </div>
+            
+                <h3>Why Indentation Matters</h3>
+                <p>Indentation isn’t just stylistic—it’s mandatory. Incorrect indentation raises an <code>IndentationError</code>. For example:</p>
+                <div class="code-example">
+                    <pre><code># This will cause an error
+            if 5 > 2:
+            print("This is wrong")</code></pre>
+                </div>
+                <p>The above code fails because the <code>print</code> statement isn’t indented under the <code>if</code> block.</p>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Fix the indentation in the code below so it runs correctly:</p>
+                    <textarea class="editor" id="syntax-editor">if 3 < 7:
+            print("Three is less than seven")</textarea>
+                    <button class="run-btn" onclick="runCode('syntax-editor', 'syntax-result')">Run Code</button>
+                    <div class="result" id="syntax-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>What defines a code block in Python?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">Indentation</div>
+                        <div class="quiz-option" data-correct="false">Curly braces</div>
+                        <div class="quiz-option" data-correct="false">Semicolons</div>
+                        <div class="quiz-option" data-correct="false">Parentheses</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> PEP 8, Python’s style guide, recommends 4 spaces per indentation level for consistency across projects.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('getstarted')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('comments')">Next</button>
+                </div>
+            </div>
+
+            <div id="comments" class="topic">
+                <h2>Python Comments</h2>
+                <p>Comments in Python start with a hash symbol (<code>#</code>) and are ignored by the Python interpreter. They are essential for explaining code, making it more readable and maintainable for yourself and others.</p>
+            
+                <h3>Types of Comments</h3>
+                <ul>
+                    <li><strong>Single-Line Comments</strong>: Begin with <code>#</code> and extend to the end of the line.</li>
+                    <li><strong>Inline Comments</strong>: Placed on the same line as code, separated by at least two spaces.</li>
+                    <li><strong>Multi-Line Comments</strong>: Achieved by using multiple <code>#</code> lines or, informally, triple-quoted strings (<code>"""</code>), though the latter is technically a string literal.</li>
+                </ul>
+            
+                <h3>Why Use Comments?</h3>
+                <p>Comments serve several purposes:</p>
+                <ul>
+                    <li><strong>Documentation</strong>: Explain what the code does, especially for complex logic.</li>
+                    <li><strong>Debugging</strong>: Temporarily disable code by "commenting it out."</li>
+                    <li><strong>Collaboration</strong>: Help team members understand your intentions.</li>
+                </ul>
+            
+                <h3>Comments in Action</h3>
+                <p>Here’s a basic example of a single-line comment:</p>
+                <div class="code-example">
+                    <pre><code># This is a comment
+            print("Hello")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Hello</pre>
+                </div>
+            
+                <p>Here’s a more detailed example with multiple comment types:</p>
+                <div class="code-example">
+                    <pre><code># Calculate the sum of two numbers
+            x = 5  # First number
+            y = 3  # Second number
+            sum = x + y
+            print(f"The sum is {sum}")  # Display result
+            
+            # Multi-line comment example:
+            # This could describe a larger block
+            # of code or a function's purpose
+            </code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>The sum is 8</pre>
+                </div>
+            
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Keep comments concise and relevant.</li>
+                    <li>Avoid stating the obvious (e.g., <code># Set x to 5</code>).</li>
+                    <li>Use comments to explain "why" rather than "what" when possible.</li>
+                </ul>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Add a comment above the code to explain what it does:</p>
+                    <textarea class="editor" id="comments-editor">age = 25
+            print(f"You are {age} years old")</textarea>
+                    <button class="run-btn" onclick="runCode('comments-editor', 'comments-result')">Run Code</button>
+                    <div class="result" id="comments-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>How do you start a single-line comment in Python?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">#</div>
+                        <div class="quiz-option" data-correct="false">//</div>
+                        <div class="quiz-option" data-correct="false">/*</div>
+                        <div class="quiz-option" data-correct="false">%</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> While triple-quoted strings (<code>"""</code>) can be used for multi-line comments, they are technically string literals and may be included in the bytecode unless optimized out.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('syntax')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('variables')">Next</button>
+                </div>
+            </div>
+
+            <!-- Python Variables -->
+            <div id="variables" class="topic">
+                <h2>Python Variables</h2>
+                <p>Variables in Python are used to store data and don’t require explicit type declarations due to Python’s dynamic typing. They act as named containers that can hold values of any data type, and their values can change during program execution.</p>
+            
+                <h3>Creating Variables</h3>
+                <p>Variables are created by assigning a value using the equals sign (<code>=</code>):</p>
+                <div class="code-example">
+                    <pre><code>x = 5          # Integer
+            y = "Hello"    # String
+            print(x, y)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>5 Hello</pre>
+                </div>
+            
+                <h3>Variable Naming Rules</h3>
+                <ul>
+                    <li><strong>Allowed Characters</strong>: Letters (a-z, A-Z), digits (0-9), and underscores (_).</li>
+                    <li><strong>Start</strong>: Must begin with a letter or underscore (not a digit).</li>
+                    <li><strong>Case Sensitivity</strong>: <code>age</code> and <code>Age</code> are different variables.</li>
+                    <li><strong>No Keywords</strong>: Cannot use Python reserved words (e.g., <code>if</code>, <code>for</code>, <code>class</code>).</li>
+                </ul>
+            
+                <h3>Advanced Assignment</h3>
+                <p>Python supports multiple assignment and unpacking:</p>
+                <div class="code-example">
+                    <pre><code># Multiple assignment
+            a, b = 10, "Python"
+            
+            # Unpacking a list
+            numbers = [1, 2, 3]
+            x, y, z = numbers
+            
+            print(a, b)
+            print(x, y, z)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>10 Python
+            1 2 3</pre>
+                </div>
+            
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Dynamic Typing</strong>: A variable’s type can change (e.g., <code>x = 5</code> then <code>x = "text"</code>).</li>
+                    <li><strong>Scope</strong>: Variables can be local (inside functions) or global (outside functions).</li>
+                    <li><strong>No Declaration</strong>: Simply assign a value to create a variable—no <code>int x;</code> like in other languages.</li>
+                </ul>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Create two variables—one with your name and one with your age—then print them:</p>
+                    <textarea class="editor" id="variables-editor">x = 5
+            y = "Hello"
+            print(x, y)</textarea>
+                    <button class="run-btn" onclick="runCode('variables-editor', 'variables-result')">Run Code</button>
+                    <div class="result" id="variables-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>Which of these is a valid Python variable name?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">my_variable</div>
+                        <div class="quiz-option" data-correct="false">2nd_place</div>
+                        <div class="quiz-option" data-correct="false">if</div>
+                        <div class="quiz-option" data-correct="false">my-variable</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> Use meaningful variable names (e.g., <code>user_age</code> instead of <code>x</code>) to improve code readability, as recommended by PEP 8.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('comments')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('datatypes')">Next</button>
+                </div>
+            </div>
+
+            <!-- Continue with remaining topics -->
+            <!-- Example for one more topic -->
+            <div id="datatypes" class="topic">
+                <h2>Python Data Types</h2>
+                <p>Python has a rich set of built-in data types such as <code>int</code>, <code>str</code>, <code>list</code>, <code>dict</code>, and more. These types allow you to store and manipulate different kinds of data, and Python’s dynamic typing means you don’t need to declare them explicitly.</p>
+            
+                <h3>Common Data Types</h3>
+                <p>Here are some of Python’s most frequently used data types:</p>
+                <table>
+                    <tr>
+                        <th>Data Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>int</code></td>
+                        <td>Integer (whole numbers)</td>
+                        <td><code>5</code>, <code>-10</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>str</code></td>
+                        <td>String (sequence of characters)</td>
+                        <td><code>"Hello"</code>, <code>'Python'</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>list</code></td>
+                        <td>List (ordered, mutable collection)</td>
+                        <td><code>[1, 2, 3]</code>, <code>["a", "b"]</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>dict</code></td>
+                        <td>Dictionary (key-value pairs)</td>
+                        <td><code>{"name": "Alex", "age": 25}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>float</code></td>
+                        <td>Floating-point number (decimals)</td>
+                        <td><code>3.14</code>, <code>-0.5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>bool</code></td>
+                        <td>Boolean (true or false)</td>
+                        <td><code>True</code>, <code>False</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>tuple</code></td>
+                        <td>Tuple (ordered, immutable collection)</td>
+                        <td><code>(1, 2, 3)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>set</code></td>
+                        <td>Set (unordered, unique elements)</td>
+                        <td><code>{1, 2, 3}</code></td>
+                    </tr>
+                </table>
+            
+                <h3>Checking Data Types</h3>
+                <p>You can use the <code>type()</code> function to identify a variable’s data type:</p>
+                <div class="code-example">
+                    <pre><code>x = 5       # int
+            y = "Hi"    # str
+            z = [1, 2]  # list
+            print(type(x), type(y), type(z))</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>&lt;class 'int'&gt; &lt;class 'str'&gt; &lt;class 'list'&gt;</pre>
+                </div>
+            
+                <p>Here’s an example mixing different data types:</p>
+                <div class="code-example">
+                    <pre><code># Mixing data types
+            person = {"name": "Alex", "age": 25}  # dict
+            height = 1.75                         # float
+            is_student = True                     # bool
+            print(f"{person['name']} is {height}m tall and student status: {is_student}")
+            print(type(person), type(height), type(is_student))</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Alex is 1.75m tall and student status: True
+            &lt;class 'dict'&gt; &lt;class 'float'&gt; &lt;class 'bool'&gt;</pre>
+                </div>
+            
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Mutable vs. Immutable</strong>: Lists and dictionaries are mutable (can be changed), while strings and tuples are immutable.</li>
+                    <li><strong>Dynamic Typing</strong>: Variables can change types (e.g., <code>x = 5</code> then <code>x = "text"</code>).</li>
+                    <li><strong>Type Conversion</strong>: Use functions like <code>int()</code>, <code>str()</code>, etc., to convert between types.</li>
+                </ul>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Add a variable with a <code>float</code> value and print its type:</p>
+                    <textarea class="editor" id="datatypes-editor">a = 10
+            b = "Python"
+            print(type(a))
+            print(type(b))</textarea>
+                    <button class="run-btn" onclick="runCode('datatypes-editor', 'datatypes-result')">Run Code</button>
+                    <div class="result" id="datatypes-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>Which data type represents a collection of key-value pairs?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">dict</div>
+                        <div class="quiz-option" data-correct="false">list</div>
+                        <div class="quiz-option" data-correct="false">str</div>
+                        <div class="quiz-option" data-correct="false">int</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> Python’s <code>type()</code> function returns the class of the object, reflecting Python’s object-oriented nature where everything is an object.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('variables')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('numbers')">Next</button>
+                </div>
+            </div>
+
+            <!-- Add remaining topics similarly -->
+            <!-- For brevity, I'll outline one advanced topic -->
+            <div id="mysqlstart" class="topic">
+                <h2>MySQL Get Started</h2>
+                <p>To connect Python to a MySQL database, use the <code>mysql-connector-python</code> library, a pure Python driver provided by MySQL. This allows you to interact with MySQL databases directly from your Python code.</p>
+            
+                <h3>Setting Up the Environment</h3>
+                <p>Before connecting, you need to install the library and have a MySQL server running:</p>
+                <ol>
+                    <li><strong>Install MySQL Server</strong>: Download and install MySQL from <a href="https://dev.mysql.com/downloads/" target="_blank">mysql.com</a> if not already installed.</li>
+                    <li><strong>Install mysql-connector-python</strong>: Run <code>pip install mysql-connector-python</code> in your terminal or command prompt.</li>
+                    <li><strong>Verify Installation</strong>: Import the library in Python and check for errors:
+                        <div class="code-example">
+                            <pre><code>import mysql.connector
+            print("Library installed successfully!")</code></pre>
+                        </div>
+                    </li>
+                </ol>
+            
+                <h3>Connecting to MySQL</h3>
+                <p>Use the <code>mysql.connector.connect()</code> method to establish a connection:</p>
+                <div class="code-example">
+                    <pre><code>import mysql.connector
+            mydb = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="password"
+            )
+            print(mydb)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>&lt;mysql.connector.connection_cext.CMySQLConnection object at 0x...&gt;</pre>
+                </div>
+                <p>The output confirms a successful connection, showing a connection object.</p>
+            
+                <h3>Basic Database Interaction</h3>
+                <p>Here’s an example checking the MySQL server version:</p>
+                <div class="code-example">
+                    <pre><code>import mysql.connector
+            
+            mydb = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="password"
+            )
+            cursor = mydb.cursor()
+            cursor.execute("SELECT VERSION()")
+            version = cursor.fetchone()
+            print(f"MySQL Server Version: {version[0]}")
+            mydb.close()</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output (example):</h4>
+                    <pre>MySQL Server Version: 8.0.33</pre>
+                </div>
+            
+                <h3>Key Connection Parameters</h3>
+                <ul>
+                    <li><strong>host</strong>: The server address (e.g., <code>"localhost"</code> for local machine).</li>
+                    <li><strong>user</strong>: Your MySQL username (default is <code>"root"</code>).</li>
+                    <li><strong>password</strong>: Your MySQL password (set during MySQL installation).</li>
+                    <li><strong>database</strong>: Optional; specifies a database to connect to (omitted here for initial connection).</li>
+                </ul>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Modify the code to print "Database connection established!" instead of "Connected!":</p>
+                    <textarea class="editor" id="mysqlstart-editor">import mysql.connector
+            mydb = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password=""
+            )
+            print("Connected!")</textarea>
+                    <button class="run-btn" onclick="runCode('mysqlstart-editor', 'mysqlstart-result')">Run Code</button>
+                    <div class="result" id="mysqlstart-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>Which library is used to connect Python to MySQL in this topic?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">mysql-connector-python</div>
+                        <div class="quiz-option" data-correct="false">pymysql</div>
+                        <div class="quiz-option" data-correct="false">sqlite3</div>
+                        <div class="quiz-option" data-correct="false">psycopg2</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> Always close your database connection with <code>mydb.close()</code> when done to free up resources, especially in production code.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('knn')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('mysqlcreatedb')">Next</button>
+                </div>
+            </div>
+
+
+            <div id="numbers" class="topic">
+                <h2>Python Numbers</h2>
+                <p>Python supports several numeric data types to handle numbers, including integers, floating-point numbers, and complex numbers. These types are built-in and allow for a wide range of mathematical operations without requiring explicit type declarations.</p>
+            
+                <h3>Numeric Data Types</h3>
+                <p>Python provides three main numeric types:</p>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>int</code></td>
+                        <td>Integer: Whole numbers of unlimited size</td>
+                        <td><code>42</code>, <code>-100</code>, <code>9999999999</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>float</code></td>
+                        <td>Floating-point: Numbers with decimal points</td>
+                        <td><code>3.14</code>, <code>-0.001</code>, <code>2.5e3</code> (2500.0)</td>
+                    </tr>
+                    <tr>
+                        <td><code>complex</code></td>
+                        <td>Complex numbers: Numbers with real and imaginary parts</td>
+                        <td><code>3 + 4j</code>, <code>-2.5 + 0j</code></td>
+                    </tr>
+                </table>
+            
+                <h3>Working with Numbers</h3>
+                <p>Here’s an example demonstrating the three numeric types:</p>
+                <div class="code-example">
+                    <pre><code># Numeric types in action
+            x = 10          # int
+            y = 3.14        # float
+            z = 2 + 3j      # complex
+            print(x, y, z)
+            print(type(x), type(y), type(z))</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>10 3.14 (2+3j)
+            <class 'int'> <class 'float'> <class 'complex'></pre>
+                </div>
+            
+                <p>Here’s an example with basic arithmetic operations:</p>
+                <div class="code-example">
+                    <pre><code># Arithmetic with numbers
+            a = 15
+            b = 4.5
+            sum_result = a + b
+            product = a * b
+            complex_sum = (1 + 2j) + (3 + 4j)
+            print(f"Sum: {sum_result}")
+            print(f"Product: {product}")
+            print(f"Complex Sum: {complex_sum}")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Sum: 19.5
+            Product: 67.5
+            Complex Sum: (4+6j)</pre>
+                </div>
+            
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Unlimited Precision</strong>: <code>int</code> has no size limit (depends on memory), unlike languages with fixed-size integers.</li>
+                    <li><strong>Scientific Notation</strong>: <code>float</code> supports <code>e</code> for exponents (e.g., <code>2.5e3</code> = 2500.0).</li>
+                    <li><strong>Complex Operations</strong>: Use <code>j</code> for imaginary parts; supports addition, subtraction, etc.</li>
+                    <li><strong>Type Conversion</strong>: Convert between types with <code>int()</code>, <code>float()</code>, and <code>complex()</code>.</li>
+                </ul>
+            
+                <h3>Type Conversion Example</h3>
+                <p>You can convert between numeric types:</p>
+                <div class="code-example">
+                    <pre><code># Type conversion
+            num_str = "123"
+            num_float = 45.67
+            int_num = int(num_str)      # String to int
+            float_num = float(int_num)  # Int to float
+            int_from_float = int(num_float)  # Float to int (truncates decimal)
+            print(int_num, float_num, int_from_float)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>123 123.0 45</pre>
+                </div>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Add a complex number variable and print its value and type:</p>
+                    <textarea class="editor" id="numbers-editor">x = 10
+            y = 3.14
+            print(x, y)
+            print(type(x), type(y))</textarea>
+                    <button class="run-btn" onclick="runCode('numbers-editor', 'numbers-result')">Run Code</button>
+                    <div class="result" id="numbers-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>Which numeric type in Python has no size limit?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">int</div>
+                        <div class="quiz-option" data-correct="false">float</div>
+                        <div class="quiz-option" data-correct="false">complex</div>
+                        <div class="quiz-option" data-correct="false">double</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> When converting a <code>float</code> to an <code>int</code>, Python truncates the decimal part (e.g., <code>int(3.9)</code> becomes <code>3</code>), not rounding it.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('datatypes')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('casting')">Next</button>
+                </div>
+            </div>
+
+            <div id="casting" class="topic">
+                <h2>Python Casting</h2>
+                <p>Casting in Python refers to converting one data type to another using built-in functions like <code>int()</code>, <code>float()</code>, <code>str()</code>, and others. This is useful when you need to manipulate data in a specific format or perform operations that require compatible types.</p>
+            
+                <h3>Common Casting Functions</h3>
+                <p>Python provides several functions for type conversion:</p>
+                <table>
+                    <tr>
+                        <th>Function</th>
+                        <th>Converts To</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>int(x)</code></td>
+                        <td>Integer</td>
+                        <td><code>int("123")</code> → <code>123</code>, <code>int(3.7)</code> → <code>3</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>float(x)</code></td>
+                        <td>Floating-point</td>
+                        <td><code>float("3.14")</code> → <code>3.14</code>, <code>float(5)</code> → <code>5.0</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>str(x)</code></td>
+                        <td>String</td>
+                        <td><code>str(42)</code> → <code>"42"</code>, <code>str(3.14)</code> → <code>"3.14"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>complex(x)</code></td>
+                        <td>Complex number</td>
+                        <td><code>complex(3)</code> → <code>(3+0j)</code>, <code>complex("2+3j")</code> → <code>(2+3j)</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>bool(x)</code></td>
+                        <td>Boolean</td>
+                        <td><code>bool(1)</code> → <code>True</code>, <code>bool(0)</code> → <code>False</code></td>
+                    </tr>
+                </table>
+            
+                <h3>Casting in Action</h3>
+                <p>Here’s an example converting between basic types:</p>
+                <div class="code-example">
+                    <pre><code># Basic casting
+            num_str = "25"
+            num_int = int(num_str)
+            num_float = float(num_str)
+            print(num_int, num_float)
+            print(type(num_int), type(num_float))</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>25 25.0
+            <class 'int'> <class 'float'></pre>
+                </div>
+            
+                <p>Here’s an example with mixed types and arithmetic:</p>
+                <div class="code-example">
+                    <pre><code># Casting for arithmetic
+            str_num = "10"
+            float_num = 5.5
+            result = int(str_num) + float_num
+            print(f"Result: {result}")
+            print(f"As integer: {int(result)}")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Result: 15.5
+            As integer: 15</pre>
+                </div>
+            
+                <h3>Key Considerations</h3>
+                <ul>
+                    <li><strong>Lossy Conversion</strong>: Converting <code>float</code> to <code>int</code> truncates decimals (e.g., <code>int(3.9)</code> → <code>3</code>).</li>
+                    <li><strong>Invalid Casting</strong>: Attempting to cast non-numeric strings to numbers raises a <code>ValueError</code> (e.g., <code>int("abc")</code>).</li>
+                    <li><strong>Boolean Logic</strong>: Non-zero numbers cast to <code>True</code>, zero to <code>False</code>; empty strings or collections are <code>False</code>.</li>
+                    <li><strong>Explicit vs. Implicit</strong>: Python doesn’t auto-cast in some cases (e.g., <code>"5" + 3</code> fails), requiring explicit casting.</li>
+                </ul>
+            
+                <h3>Practical Example</h3>
+                <p>Casting is often used with user input, which is always a string:</p>
+                <div class="code-example">
+                    <pre><code># Casting user input
+            age = input("Enter your age: ")  # Returns a string
+            age_int = int(age)               # Convert to integer
+            next_year = age_int + 1
+            print(f"Next year, you’ll be {next_year}")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Example Output:</h4>
+                    <pre>Enter your age: 25
+            Next year, you’ll be 26</pre>
+                </div>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Cast the string <code>"7.89"</code> to a float and then to an integer, printing both results:</p>
+                    <textarea class="editor" id="casting-editor">num = "7.89"
+            print(num)</textarea>
+                    <button class="run-btn" onclick="runCode('casting-editor', 'casting-result')">Run Code</button>
+                    <div class="result" id="casting-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>What does <code>int(9.75)</code> return?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">9</div>
+                        <div class="quiz-option" data-correct="false">10</div>
+                        <div class="quiz-option" data-correct="false">9.75</div>
+                        <div class="quiz-option" data-correct="false">Error</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> Use <code>round()</code> instead of <code>int()</code> if you want to round a float to the nearest integer (e.g., <code>round(9.75)</code> → <code>10</code>).</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('numbers')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('strings')">Next</button>
+                </div>
+            </div>
+
+            <div id="strings" class="topic">
+                <h2>Python Strings</h2>
+                <p>Strings in Python are sequences of characters used to store and manipulate text. They are immutable, meaning they cannot be changed after creation, and are enclosed in single quotes (<code>'</code>) or double quotes (<code>"</code>).</p>
+            
+                <h3>String Basics</h3>
+                <p>Here are some fundamental aspects of strings:</p>
+                <ul>
+                    <li><strong>Creation</strong>: Use <code>'text'</code> or <code>"text"</code> (both are equivalent).</li>
+                    <li><strong>Multi-line</strong>: Use triple quotes (<code>'''</code> or <code>"""</code>) for strings spanning multiple lines.</li>
+                    <li><strong>Indexing</strong>: Access characters with zero-based indices (e.g., <code>s[0]</code> for the first character).</li>
+                    <li><strong>Length</strong>: Use <code>len()</code> to get the number of characters.</li>
+                </ul>
+            
+                <h3>Working with Strings</h3>
+                <p>Here’s an example demonstrating string creation and basic operations:</p>
+                <div class="code-example">
+                    <pre><code># Basic string operations
+            greeting = "Hello"
+            name = 'Python'
+            full_message = greeting + " " + name  # Concatenation
+            print(full_message)
+            print(full_message[0])               # Indexing
+            print(len(full_message))             # Length</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Hello Python
+            H
+            11</pre>
+                </div>
+            
+                <p>Here’s an example with multi-line strings and slicing:</p>
+                <div class="code-example">
+                    <pre><code># Multi-line and slicing
+            poem = """Roses are red,
+            Violets are blue,
+            Python is great,
+            And so are you!"""
+            print(poem)
+            print(poem[0:5])         # Slicing (first 5 characters)
+            print(poem.split()[0])   # Split into words, get first word</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>Roses are red,
+            Violets are blue,
+            Python is great,
+            And so are you!
+            Roses
+            Roses</pre>
+                </div>
+            
+                <h3>Common String Methods</h3>
+                <p>Python provides many built-in methods for string manipulation:</p>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>upper()</code></td>
+                        <td>Converts to uppercase</td>
+                        <td><code>"hello".upper()</code> → <code>"HELLO"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>lower()</code></td>
+                        <td>Converts to lowercase</td>
+                        <td><code>"HELLO".lower()</code> → <code>"hello"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>strip()</code></td>
+                        <td>Removes leading/trailing whitespace</td>
+                        <td><code>"  hi  ".strip()</code> → <code>"hi"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>replace()</code></td>
+                        <td>Replaces substring</td>
+                        <td><code>"cat".replace("c", "b")</code> → <code>"bat"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>split()</code></td>
+                        <td>Splits into a list</td>
+                        <td><code>"a,b".split(",")</code> → <code>["a", "b"]</code></td>
+                    </tr>
+                </table>
+            
+                <h3>String Formatting</h3>
+                <p>Format strings using f-strings or the <code>.format()</code> method:</p>
+                <div class="code-example">
+                    <pre><code># String formatting
+            name = "Alex"
+            age = 25
+            f_string = f"My name is {name} and I am {age}"
+            format_method = "My name is {} and I am {}".format(name, age)
+            print(f_string)
+            print(format_method)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>My name is Alex and I am 25
+            My name is Alex and I am 25</pre>
+                </div>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Create a string with your name, convert it to uppercase, and print its length:</p>
+                    <textarea class="editor" id="strings-editor">name = "Python"
+            print(name)</textarea>
+                    <button class="run-btn" onclick="runCode('strings-editor', 'strings-result')">Run Code</button>
+                    <div class="result" id="strings-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>What does <code>"hello".upper()</code> return?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">"HELLO"</div>
+                        <div class="quiz-option" data-correct="false">"hello"</div>
+                        <div class="quiz-option" data-correct="false">"Hello"</div>
+                        <div class="quiz-option" data-correct="false">Error</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> Since strings are immutable, methods like <code>upper()</code> return a new string rather than modifying the original.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('casting')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('booleans')">Next</button>
+                </div>
+            </div>
+
+
+
+            <div id="booleans" class="topic">
+                <h2>Python Booleans</h2>
+                <p>Booleans in Python represent truth values: <code>True</code> and <code>False</code>. They are a subtype of integers (where <code>True</code> equals 1 and <code>False</code> equals 0) and are used extensively in conditional statements, comparisons, and logical operations.</p>
+            
+                <h3>Boolean Basics</h3>
+                <p>Key aspects of booleans include:</p>
+                <ul>
+                    <li><strong>Values</strong>: Only two possible values: <code>True</code> and <code>False</code>.</li>
+                    <li><strong>Type</strong>: Created explicitly or returned by comparison/logical operations.</li>
+                    <li><strong>Case Sensitivity</strong>: Must be capitalized (<code>true</code> or <code>false</code> will raise an error).</li>
+                </ul>
+            
+                <h3>Working with Booleans</h3>
+                <p>Here’s an example using booleans in comparisons:</p>
+                <div class="code-example">
+                    <pre><code># Boolean comparisons
+            a = 10
+            b = 5
+            is_greater = a > b
+            is_equal = a == b
+            print(is_greater, is_equal)
+            print(type(is_greater))</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>True False
+            <class 'bool'></pre>
+                </div>
+            
+                <p>Here’s an example with logical operators:</p>
+                <div class="code-example">
+                    <pre><code># Logical operators
+            x = True
+            y = False
+            and_result = x and y   # Both must be True
+            or_result = x or y     # At least one must be True
+            not_result = not x     # Inverts the value
+            print(and_result, or_result, not_result)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>False True False</pre>
+                </div>
+            
+                <h3>Boolean Conversion</h3>
+                <p>Most values can be converted to booleans using <code>bool()</code>. Python evaluates "truthiness":</p>
+                <table>
+                    <tr>
+                        <th>Value</th>
+                        <th>Converts to</th>
+                    </tr>
+                    <tr>
+                        <td><code>0</code>, <code>0.0</code>, <code>""</code> (empty string), <code>[]</code> (empty list), <code>{}</code> (empty dict), <code>None</code></td>
+                        <td><code>False</code></td>
+                    </tr>
+                    <tr>
+                        <td>Non-zero numbers, non-empty strings, lists, etc.</td>
+                        <td><code>True</code></td>
+                    </tr>
+                </table>
+                <div class="code-example">
+                    <pre><code># Boolean conversion
+            print(bool(0))         # False
+            print(bool(42))        # True
+            print(bool(""))        # False
+            print(bool("Hello"))   # True</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>False True False True</pre>
+                </div>
+            
+                <h3>Booleans in Control Flow</h3>
+                <p>Booleans are critical in <code>if</code> statements:</p>
+                <div class="code-example">
+                    <pre><code># Boolean in if statement
+            temperature = 25
+            is_hot = temperature > 30
+            if is_hot:
+                print("It's hot outside!")
+            else:
+                print("It's not too hot.")</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>It's not too hot.</pre>
+                </div>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Create a boolean variable to check if 15 is less than 20, then print it and its type:</p>
+                    <textarea class="editor" id="booleans-editor">x = 10
+            print(x)</textarea>
+                    <button class="run-btn" onclick="runCode('booleans-editor', 'booleans-result')">Run Code</button>
+                    <div class="result" id="booleans-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>What does <code>bool("0")</code> return?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">True</div>
+                        <div class="quiz-option" data-correct="false">False</div>
+                        <div class="quiz-option" data-correct="false">0</div>
+                        <div class="quiz-option" data-correct="false">Error</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> In arithmetic, <code>True</code> is treated as 1 and <code>False</code> as 0 (e.g., <code>True + True = 2</code>).</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('strings')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('operators')">Next</button>
+                </div>
+            </div>
+
+
+
+            <div id="operators" class="topic">
+                <h2>Python Operators</h2>
+                <p>Operators in Python are special symbols or keywords used to perform operations on variables and values. Python supports a wide range of operators, including arithmetic, comparison, logical, assignment, and more, enabling you to manipulate data effectively.</p>
+            
+                <h3>Types of Operators</h3>
+                <p>Here’s an overview of the main operator categories:</p>
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Operators</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>Arithmetic</td>
+                        <td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>//</code>, <code>%</code>, <code>**</code></td>
+                        <td>Perform mathematical calculations</td>
+                    </tr>
+                    <tr>
+                        <td>Comparison</td>
+                        <td><code>==</code>, <code>!=</code>, <code>></code>, <code><</code>, <code>>=</code>, <code><=</code></td>
+                        <td>Compare values, return booleans</td>
+                    </tr>
+                    <tr>
+                        <td>Logical</td>
+                        <td><code>and</code>, <code>or</code>, <code>not</code></td>
+                        <td>Combine or invert boolean expressions</td>
+                    </tr>
+                    <tr>
+                        <td>Assignment</td>
+                        <td><code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, etc.</td>
+                        <td>Assign or modify values</td>
+                    </tr>
+                    <tr>
+                        <td>Membership</td>
+                        <td><code>in</code>, <code>not in</code></td>
+                        <td>Test if a value is in a sequence</td>
+                    </tr>
+                    <tr>
+                        <td>Identity</td>
+                        <td><code>is</code>, <code>is not</code></td>
+                        <td>Check if objects are identical</td>
+                    </tr>
+                </table>
+            
+                <h3>Arithmetic Operators</h3>
+                <p>Here’s an example using arithmetic operators:</p>
+                <div class="code-example">
+                    <pre><code># Arithmetic operators
+            a = 10
+            b = 3
+            print(a + b)   # Addition: 13
+            print(a - b)   # Subtraction: 7
+            print(a * b)   # Multiplication: 30
+            print(a / b)   # Division: 3.333...
+            print(a // b)  # Floor division: 3
+            print(a % b)   # Modulus: 1
+            print(a ** b)  # Exponentiation: 1000</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>13
+            7
+            30
+            3.3333333333333335
+            3
+            1
+            1000</pre>
+                </div>
+            
+                <h3>Comparison and Logical Operators</h3>
+                <p>Here’s an example combining comparison and logical operators:</p>
+                <div class="code-example">
+                    <pre><code># Comparison and logical operators
+            x = 5
+            y = 10
+            is_greater = x > y          # False
+            is_equal = x == y           # False
+            logical_and = (x < y) and (x > 0)  # True
+            logical_or = (x > y) or (y > 0)   # True
+            print(is_greater, is_equal, logical_and, logical_or)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>False False True True</pre>
+                </div>
+            
+                <h3>Membership and Identity Operators</h3>
+                <p>Here’s an example with membership and identity operators:</p>
+                <div class="code-example">
+                    <pre><code># Membership and identity operators
+            fruits = ["apple", "banana"]
+            print("apple" in fruits)      # True
+            print("orange" not in fruits) # True
+            
+            a = [1, 2]
+            b = [1, 2]
+            c = a
+            print(a is b)     # False (different objects)
+            print(a is c)     # True (same object)
+            print(a == b)     # True (same values)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>True True False True True</pre>
+                </div>
+            
+                <h3>Key Features</h3>
+                <ul>
+                    <li><strong>Operator Precedence</strong>: Follows standard math rules (e.g., <code>*</code> before <code>+</code>); use parentheses to override.</li>
+                    <li><strong>Short-Circuiting</strong>: <code>and</code> and <code>or</code> stop evaluating once the result is determined.</li>
+                    <li><strong>Chaining</strong>: Comparison operators can be chained (e.g., <code>3 < x < 10</code>).</li>
+                </ul>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Use operators to check if 8 is between 5 and 10, then print the result:</p>
+                    <textarea class="editor" id="operators-editor">x = 8
+            print(x)</textarea>
+                    <button class="run-btn" onclick="runCode('operators-editor', 'operators-result')">Run Code</button>
+                    <div class="result" id="operators-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>What does <code>7 % 3</code> return?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">1</div>
+                        <div class="quiz-option" data-correct="false">2</div>
+                        <div class="quiz-option" data-correct="false">3</div>
+                        <div class="quiz-option" data-correct="false">0</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> The <code>is</code> operator checks object identity (memory location), while <code>==</code> checks value equality—important for mutable objects like lists.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('booleans')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('lists')">Next</button>
+                </div>
+            </div>
+
+
+
+            <div id="lists" class="topic">
+                <h2>Python Lists</h2>
+                <p>Lists in Python are ordered, mutable collections of items, enclosed in square brackets (<code>[]</code>). They can store elements of different data types and are one of the most versatile and commonly used data structures in Python.</p>
+            
+                <h3>List Basics</h3>
+                <p>Key characteristics of lists include:</p>
+                <ul>
+                    <li><strong>Ordered</strong>: Items maintain their insertion order.</li>
+                    <li><strong>Mutable</strong>: You can change, add, or remove items after creation.</li>
+                    <li><strong>Indexed</strong>: Access items using zero-based indices (e.g., <code>list[0]</code>).</li>
+                    <li><strong>Flexible</strong>: Can contain mixed data types (e.g., integers, strings, other lists).</li>
+                </ul>
+            
+                <h3>Creating and Accessing Lists</h3>
+                <p>Here’s an example of list creation and basic access:</p>
+                <div class="code-example">
+                    <pre><code># Creating and accessing a list
+            fruits = ["apple", "banana", "cherry"]
+            print(fruits)         # Entire list
+            print(fruits[1])      # Second item
+            print(fruits[-1])     # Last item
+            print(len(fruits))    # Number of items</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>['apple', 'banana', 'cherry']
+            banana
+            cherry
+            3</pre>
+                </div>
+            
+                <h3>List Methods</h3>
+                <p>Python provides many built-in methods to manipulate lists:</p>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td><code>append(x)</code></td>
+                        <td>Adds an item to the end</td>
+                        <td><code>list.append("orange")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>insert(i, x)</code></td>
+                        <td>Inserts an item at index i</td>
+                        <td><code>list.insert(1, "grape")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>pop(i)</code></td>
+                        <td>Removes and returns item at index i (default: last)</td>
+                        <td><code>list.pop()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>remove(x)</code></td>
+                        <td>Removes first occurrence of x</td>
+                        <td><code>list.remove("apple")</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>sort()</code></td>
+                        <td>Sorts the list in place</td>
+                        <td><code>list.sort()</code></td>
+                    </tr>
+                </table>
+            
+                <h3>Manipulating Lists</h3>
+                <p>Here’s an example using list methods and slicing:</p>
+                <div class="code-example">
+                    <pre><code># Manipulating a list
+            numbers = [3, 1, 4, 1, 5]
+            numbers.append(9)          # Add 9 to the end
+            numbers.sort()             # Sort in ascending order
+            print(numbers)             # Sorted list
+            print(numbers[1:4])        # Slice from index 1 to 3
+            numbers[0] = 0             # Replace first item
+            print(numbers)</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>[1, 1, 3, 4, 5, 9]
+            [1, 3, 4]
+            [0, 1, 3, 4, 5, 9]</pre>
+                </div>
+            
+                <h3>Nested Lists</h3>
+                <p>Lists can contain other lists (nested lists):</p>
+                <div class="code-example">
+                    <pre><code># Nested list
+            matrix = [[1, 2], [3, 4]]
+            print(matrix)
+            print(matrix[0][1])  # Access 2 from first sublist</code></pre>
+                </div>
+                <div class="example-output">
+                    <h4>Output:</h4>
+                    <pre>[[1, 2], [3, 4]]
+            2</pre>
+                </div>
+            
+                <div class="try-it-yourself">
+                    <h3>Try it Yourself</h3>
+                    <p>Create a list of 3 colors, add a fourth color, then print the list and its second item:</p>
+                    <textarea class="editor" id="lists-editor">colors = ["red", "blue", "green"]
+            print(colors)</textarea>
+                    <button class="run-btn" onclick="runCode('lists-editor', 'lists-result')">Run Code</button>
+                    <div class="result" id="lists-result"></div>
+                </div>
+            
+                <div class="quiz-container">
+                    <h3>Quick Quiz</h3>
+                    <p>What does <code>list.pop()</code> do by default?</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-correct="true">Removes and returns the last item</div>
+                        <div class="quiz-option" data-correct="false">Removes the first item</div>
+                        <div class="quiz-option" data-correct="false">Sorts the list</div>
+                        <div class="quiz-option" data-correct="false">Adds an item</div>
+                    </div>
+                    <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <div class="quiz-feedback"></div>
+                </div>
+            
+                <div class="note">
+                    <p><strong>Note:</strong> Lists are mutable, but assigning a list to a new variable (e.g., <code>b = a</code>) creates a reference, not a copy—changes to <code>b</code> affect <code>a</code>. Use <code>b = a[:]</code> or <code>b = list(a)</code> for a copy.</p>
+                </div>
+            
+                <div class="topic-navigation">
+                    <button class="nav-btn prev-btn" onclick="navigateTopic('operators')">Previous</button>
+                    <button class="nav-btn next-btn" onclick="navigateTopic('tuples')">Next</button>
+                </div>
+            </div>
+
+
+
+<div id="tuples" class="topic">
+    <h2>Python Tuples</h2>
+    <p>Tuples in Python are ordered, immutable collections of items, enclosed in parentheses (<code>()</code>). They are similar to lists but cannot be modified after creation, making them useful for fixed data or as dictionary keys.</p>
+
+    <h3>Tuple Basics</h3>
+    <p>Key characteristics of tuples include:</p>
+    <ul>
+        <li><strong>Ordered</strong>: Items maintain their insertion order.</li>
+        <li><strong>Immutable</strong>: Cannot change, add, or remove items after creation.</li>
+        <li><strong>Indexed</strong>: Access items using zero-based indices (e.g., <code>tuple[0]</code>).</li>
+        <li><strong>Flexible</strong>: Can contain mixed data types, like lists.</li>
+    </ul>
+
+    <h3>Creating and Accessing Tuples</h3>
+    <p>Here’s an example of tuple creation and basic access:</p>
+    <div class="code-example">
+        <pre><code># Creating and accessing a tuple
+colors = ("red", "blue", "green")
+print(colors)         # Entire tuple
+print(colors[1])      # Second item
+print(colors[-1])     # Last item
+print(len(colors))    # Number of items</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>('red', 'blue', 'green')
+blue
+green
+3</pre>
+    </div>
+
+    <h3>Tuple Methods</h3>
+    <p>Since tuples are immutable, they have fewer methods than lists:</p>
+    <table>
+        <tr>
+            <th>Method</th>
+            <th>Description</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><code>count(x)</code></td>
+            <td>Counts occurrences of x</td>
+            <td><code>tuple.count("red")</code></td>
+        </tr>
+        <tr>
+            <td><code>index(x)</code></td>
+            <td>Returns first index of x</td>
+            <td><code>tuple.index("blue")</code></td>
+        </tr>
+    </table>
+
+    <h3>Working with Tuples</h3>
+    <p>Here’s an example using tuple methods and unpacking:</p>
+    <div class="code-example">
+        <pre><code># Tuple operations
+numbers = (1, 2, 2, 3, 4)
+print(numbers.count(2))   # Count occurrences of 2
+print(numbers.index(3))   # Find index of 3
+
+# Unpacking a tuple
+x, y, z, w, v = numbers
+print(x, y, z, w, v)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>2
+3
+1 2 2 3 4</pre>
+    </div>
+
+    <h3>Tuples vs. Lists</h3>
+    <p>Here’s an example highlighting immutability:</p>
+    <div class="code-example">
+        <pre><code># Tuple immutability
+my_tuple = (10, 20, 30)
+# my_tuple[0] = 5  # This would raise a TypeError
+my_list = [10, 20, 30]
+my_list[0] = 5     # Lists are mutable
+print(my_tuple)
+print(my_list)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>(10, 20, 30)
+[5, 20, 30]</pre>
+    </div>
+
+    <h3>Practical Use</h3>
+    <p>Tuples are often used for fixed data or multiple return values:</p>
+    <div class="code-example">
+        <pre><code># Function returning a tuple
+def get_person():
+    return ("Alex", 25)
+
+name, age = get_person()
+print(f"Name: {name}, Age: {age}")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Name: Alex, Age: 25</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create a tuple with 3 numbers, then print how many times 2 appears in it:</p>
+        <textarea class="editor" id="tuples-editor">numbers = (1, 2, 3)
+print(numbers)</textarea>
+        <button class="run-btn" onclick="runCode('tuples-editor', 'tuples-result')">Run Code</button>
+        <div class="result" id="tuples-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>Why can’t you modify a tuple after creation?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">It’s immutable</div>
+            <div class="quiz-option" data-correct="false">It’s unordered</div>
+            <div class="quiz-option" data-correct="false">It’s indexed</div>
+            <div class="quiz-option" data-correct="false">It’s too large</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> A single-item tuple requires a trailing comma (e.g., <code>(5,)</code>) to distinguish it from a parenthesized expression like <code>(5)</code>.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('lists')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('sets')">Next</button>
+    </div>
+</div>
+
+
+<div id="sets" class="topic">
+    <h2>Python Sets</h2>
+    <p>Sets in Python are unordered, mutable collections of unique items, enclosed in curly braces (<code>{}</code>) or created with the <code>set()</code> function. They are ideal for tasks requiring membership testing, removing duplicates, or performing mathematical set operations like union and intersection.</p>
+
+    <h3>Set Basics</h3>
+    <p>Key characteristics of sets include:</p>
+    <ul>
+        <li><strong>Unordered</strong>: Items have no specific order; you cannot access them by index.</li>
+        <li><strong>Mutable</strong>: You can add or remove items after creation.</li>
+        <li><strong>Unique</strong>: Duplicate items are automatically removed.</li>
+        <li><strong>Hashable Elements</strong>: Items must be immutable (e.g., numbers, strings, tuples), not lists or dictionaries.</li>
+    </ul>
+
+    <h3>Creating and Accessing Sets</h3>
+    <p>Here’s an example of set creation and basic operations:</p>
+    <div class="code-example">
+        <pre><code># Creating a set
+fruits = {"apple", "banana", "cherry", "apple"}  # Duplicate "apple" ignored
+print(fruits)          # Unordered output
+print(len(fruits))     # Number of unique items
+print("banana" in fruits)  # Membership test</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output (order may vary):</h4>
+        <pre>{'apple', 'banana', 'cherry'}
+3
+True</pre>
+    </div>
+
+    <h3>Set Methods</h3>
+    <p>Python provides many methods for set manipulation:</p>
+    <table>
+        <tr>
+            <th>Method</th>
+            <th>Description</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><code>add(x)</code></td>
+            <td>Adds an item</td>
+            <td><code>set.add("orange")</code></td>
+        </tr>
+        <tr>
+            <td><code>remove(x)</code></td>
+            <td>Removes an item (raises KeyError if not found)</td>
+            <td><code>set.remove("apple")</code></td>
+        </tr>
+        <tr>
+            <td><code>discard(x)</code></td>
+            <td>Removes an item (no error if not found)</td>
+            <td><code>set.discard("grape")</code></td>
+        </tr>
+        <tr>
+            <td><code>union()</code></td>
+            <td>Combines sets</td>
+            <td><code>set.union(other_set)</code></td>
+        </tr>
+        <tr>
+            <td><code>intersection()</code></td>
+            <td>Finds common items</td>
+            <td><code>set.intersection(other_set)</code></td>
+        </tr>
+    </table>
+
+    <h3>Working with Sets</h3>
+    <p>Here’s an example using set methods and operations:</p>
+    <div class="code-example">
+        <pre><code># Set operations
+numbers = {1, 2, 3, 4}
+numbers.add(5)              # Add 5
+numbers.remove(2)           # Remove 2
+other_numbers = {4, 5, 6}
+union_set = numbers.union(other_numbers)
+intersection_set = numbers.intersection(other_numbers)
+print(numbers)
+print(union_set)
+print(intersection_set)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output (order may vary):</h4>
+        <pre>{1, 3, 4, 5}
+{1, 3, 4, 5, 6}
+{4, 5}</pre>
+    </div>
+
+    <h3>Set Operations with Operators</h3>
+    <p>Sets support mathematical operators:</p>
+    <div class="code-example">
+        <pre><code># Set operators
+set1 = {1, 2, 3}
+set2 = {2, 3, 4}
+print(set1 | set2)  # Union
+print(set1 & set2)  # Intersection
+print(set1 - set2)  # Difference</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output (order may vary):</h4>
+        <pre>{1, 2, 3, 4}
+{2, 3}
+{1}</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create a set of 3 animals, add a fourth, then print the set and check if "dog" is in it:</p>
+        <textarea class="editor" id="sets-editor">animals = {"cat", "bird", "fish"}
+print(animals)</textarea>
+        <button class="run-btn" onclick="runCode('sets-editor', 'sets-result')">Run Code</button>
+        <div class="result" id="sets-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What happens if you add a duplicate item to a set?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">It’s ignored</div>
+            <div class="quiz-option" data-correct="false">It’s added again</div>
+            <div class="quiz-option" data-correct="false">It raises an error</div>
+            <div class="quiz-option" data-correct="false">It replaces the original</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Use <code>discard()</code> instead of <code>remove()</code> if you’re unsure whether an item exists, to avoid a <code>KeyError</code>.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('tuples')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('dictionaries')">Next</button>
+    </div>
+</div>
+
+
+
+<div id="dictionaries" class="topic">
+    <h2>Python Dictionaries</h2>
+    <p>Dictionaries in Python are unordered, mutable collections of key-value pairs, enclosed in curly braces (<code>{}</code>). They are optimized for retrieving values using unique keys, making them ideal for data mapping and lookups.</p>
+
+    <h3>Dictionary Basics</h3>
+    <p>Key characteristics of dictionaries include:</p>
+    <ul>
+        <li><strong>Unordered</strong>: Items have no specific order (prior to Python 3.7; insertion order preserved since 3.7).</li>
+        <li><strong>Mutable</strong>: You can add, remove, or change items after creation.</li>
+        <li><strong>Key-Value Pairs</strong>: Access values using keys, not indices.</li>
+        <li><strong>Unique Keys</strong>: Keys must be immutable (e.g., strings, numbers, tuples) and unique; values can be any type.</li>
+    </ul>
+
+    <h3>Creating and Accessing Dictionaries</h3>
+    <p>Here’s an example of dictionary creation and basic access:</p>
+    <div class="code-example">
+        <pre><code># Creating and accessing a dictionary
+person = {"name": "Alex", "age": 25, "city": "New York"}
+print(person)           # Entire dictionary
+print(person["name"])   # Access value by key
+print(len(person))      # Number of key-value pairs</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>{'name': 'Alex', 'age': 25, 'city': 'New York'}
+Alex
+3</pre>
+    </div>
+
+    <h3>Dictionary Methods</h3>
+    <p>Python provides many methods for dictionary manipulation:</p>
+    <table>
+        <tr>
+            <th>Method</th>
+            <th>Description</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><code>get(key)</code></td>
+            <td>Returns value for key (None if not found)</td>
+            <td><code>dict.get("name")</code></td>
+        </tr>
+        <tr>
+            <td><code>keys()</code></td>
+            <td>Returns all keys</td>
+            <td><code>dict.keys()</code></td>
+        </tr>
+        <tr>
+            <td><code>values()</code></td>
+            <td>Returns all values</td>
+            <td><code>dict.values()</code></td>
+        </tr>
+        <tr>
+            <td><code>items()</code></td>
+            <td>Returns all key-value pairs</td>
+            <td><code>dict.items()</code></td>
+        </tr>
+        <tr>
+            <td><code>pop(key)</code></td>
+            <td>Removes and returns value for key</td>
+            <td><code>dict.pop("age")</code></td>
+        </tr>
+    </table>
+
+    <h3>Working with Dictionaries</h3>
+    <p>Here’s an example using dictionary methods and modification:</p>
+    <div class="code-example">
+        <pre><code># Dictionary operations
+student = {"name": "Emma", "grade": "A", "year": 2023}
+student["grade"] = "A+"      # Update value
+student["school"] = "ABS"    # Add new key-value pair
+removed_grade = student.pop("grade")  # Remove and get "grade"
+print(student)
+print(f"Removed grade: {removed_grade}")
+print(student.keys())</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>{'name': 'Emma', 'year': 2023, 'school': 'ABS'}
+Removed grade: A+
+dict_keys(['name', 'year', 'school'])</pre>
+    </div>
+
+    <h3>Nested Dictionaries</h3>
+    <p>Dictionaries can contain other dictionaries:</p>
+    <div class="code-example">
+        <pre><code># Nested dictionary
+family = {
+    "parent1": {"name": "John", "age": 40},
+    "parent2": {"name": "Jane", "age": 38}
+}
+print(family)
+print(family["parent1"]["name"])  # Access nested value</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>{'parent1': {'name': 'John', 'age': 40}, 'parent2': {'name': 'Jane', 'age': 38}}
+John</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create a dictionary with your name and age, add a "hobby" key, then print the dictionary and its values:</p>
+        <textarea class="editor" id="dictionaries-editor">person = {"name": "Alex", "age": 25}
+print(person)</textarea>
+        <button class="run-btn" onclick="runCode('dictionaries-editor', 'dictionaries-result')">Run Code</button>
+        <div class="result" id="dictionaries-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What does <code>dict.get("key")</code> return if the key isn’t found?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">None</div>
+            <div class="quiz-option" data-correct="false">KeyError</div>
+            <div class="quiz-option" data-correct="false">0</div>
+            <div class="quiz-option" data-correct="false">False</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Use <code>dict.get("key", default)</code> to specify a default value (e.g., <code>"Not found"</code>) instead of <code>None</code> when a key is missing.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('sets')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('ifelse')">Next</button>
+    </div>
+</div>
+
+
+<div id="ifelse" class="topic">
+    <h2>Python If...Else</h2>
+    <p>The <code>if...else</code> statement in Python is used for decision-making, allowing you to execute different blocks of code based on conditions. It evaluates boolean expressions and controls the flow of your program.</p>
+
+    <h3>Syntax Overview</h3>
+    <p>The basic structure includes <code>if</code>, optional <code>elif</code> (else if), and optional <code>else</code>:</p>
+    <ul>
+        <li><strong><code>if</code></strong>: Executes a block if the condition is <code>True</code>.</li>
+        <li><strong><code>elif</code></strong>: Checks additional conditions if the previous ones are <code>False</code>.</li>
+        <li><strong><code>else</code></strong>: Executes a block if all conditions are <code>False</code>.</li>
+    </ul>
+
+    <h3>Basic If Statement</h3>
+    <p>Here’s a simple example with an <code>if</code> statement:</p>
+    <div class="code-example">
+        <pre><code># Basic if statement
+age = 18
+if age >= 18:
+    print("You are an adult.")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>You are an adult.</pre>
+    </div>
+
+    <h3>If...Else Statement</h3>
+    <p>Here’s an example with <code>if</code> and <code>else</code>:</p>
+    <div class="code-example">
+        <pre><code># If...else
+temperature = 25
+if temperature > 30:
+    print("It’s hot outside!")
+else:
+    print("It’s not too hot.")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>It’s not too hot.</pre>
+    </div>
+
+    <h3>If...Elif...Else Statement</h3>
+    <p>Here’s an example with multiple conditions:</p>
+    <div class="code-example">
+        <pre><code># If...elif...else
+score = 85
+if score >= 90:
+    print("Grade: A")
+elif score >= 80:
+    print("Grade: B")
+elif score >= 70:
+    print("Grade: C")
+else:
+    print("Grade: D or below")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Grade: B</pre>
+    </div>
+
+    <h3>Nested If Statements</h3>
+    <p>You can nest <code>if</code> statements for more complex logic:</p>
+    <div class="code-example">
+        <pre><code># Nested if
+age = 20
+has_id = True
+if age >= 18:
+    if has_id:
+        print("You can enter the club.")
+    else:
+        print("You need an ID.")
+else:
+    print("You’re too young.")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>You can enter the club.</pre>
+    </div>
+
+    <h3>Using Logical Operators</h3>
+    <p>Combine conditions with <code>and</code>, <code>or</code>, and <code>not</code>:</p>
+    <div class="code-example">
+        <pre><code># Logical operators in if
+temperature = 15
+is_raining = False
+if temperature < 20 and not is_raining:
+    print("It’s a cool, dry day.")
+else:
+    print("Weather conditions vary.")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>It’s a cool, dry day.</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Write an <code>if...else</code> statement to check if a number is positive or negative:</p>
+        <textarea class="editor" id="ifelse-editor">num = 5
+print(num)</textarea>
+        <button class="run-btn" onclick="runCode('ifelse-editor', 'ifelse-result')">Run Code</button>
+        <div class="result" id="ifelse-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What keyword is used to check additional conditions after an <code>if</code>?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">elif</div>
+            <div class="quiz-option" data-correct="false">else</div>
+            <div class="quiz-option" data-correct="false">ifelse</div>
+            <div class="quiz-option" data-correct="false">then</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Conditions in <code>if</code> statements are evaluated to booleans—non-zero numbers, non-empty strings, etc., are treated as <code>True</code>, while <code>0</code>, empty strings, etc., are <code>False</code>.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('dictionaries')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('whileloops')">Next</button>
+    </div>
+</div>
+
+
+<div id="whileloops" class="topic">
+    <h2>Python While Loops</h2>
+    <p>A <code>while</code> loop in Python repeatedly executes a block of code as long as a condition is <code>True</code>. It’s useful for tasks where the number of iterations isn’t known in advance, unlike for loops.</p>
+
+    <h3>Syntax Overview</h3>
+    <p>The basic structure of a <code>while</code> loop:</p>
+    <ul>
+        <li><strong><code>while condition:</code></strong>: Runs the loop while the condition is <code>True</code>.</li>
+        <li><strong>Loop Body</strong>: Indented code that executes each iteration.</li>
+        <li><strong>Update</strong>: Must modify the condition variable to avoid infinite loops.</li>
+    </ul>
+
+    <h3>Basic While Loop</h3>
+    <p>Here’s a simple example counting from 1 to 5:</p>
+    <div class="code-example">
+        <pre><code># Basic while loop
+count = 1
+while count <= 5:
+    print(count)
+    count += 1</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>1
+2
+3
+4
+5</pre>
+    </div>
+
+    <h3>While with Break</h3>
+    <p>Use <code>break</code> to exit a loop early:</p>
+    <div class="code-example">
+        <pre><code># While loop with break
+num = 0
+while num < 10:
+    if num == 5:
+        break
+    print(num)
+    num += 1</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>0
+1
+2
+3
+4</pre>
+    </div>
+
+    <h3>While with Continue</h3>
+    <p>Use <code>continue</code> to skip an iteration:</p>
+    <div class="code-example">
+        <pre><code># While loop with continue
+i = 0
+while i < 6:
+    i += 1
+    if i % 2 == 0:
+        continue
+    print(i)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>1
+3
+5</pre>
+    </div>
+
+    <h3>While with Else</h3>
+    <p>The <code>else</code> block runs when the condition becomes <code>False</code>:</p>
+    <div class="code-example">
+        <pre><code># While loop with else
+count = 0
+while count < 3:
+    print(f"Count: {count}")
+    count += 1
+else:
+    print("Loop finished!")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Count: 0
+Count: 1
+Count: 2
+Loop finished!</pre>
+    </div>
+
+    <h3>Infinite Loop Example</h3>
+    <p>Be cautious of infinite loops; here’s one stopped with <code>break</code>:</p>
+    <div class="code-example">
+        <pre><code># Controlled infinite loop
+timer = 0
+while True:
+    print(f"Timer: {timer}")
+    timer += 1
+    if timer == 4:
+        break</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Timer: 0
+Timer: 1
+Timer: 2
+Timer: 3</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Write a <code>while</code> loop to print numbers from 10 down to 7:</p>
+        <textarea class="editor" id="whileloops-editor">num = 10
+print(num)</textarea>
+        <button class="run-btn" onclick="runCode('whileloops-editor', 'whileloops-result')">Run Code</button>
+        <div class="result" id="whileloops-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What keyword stops a <code>while</code> loop immediately?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">break</div>
+            <div class="quiz-option" data-correct="false">continue</div>
+            <div class="quiz-option" data-correct="false">else</div>
+            <div class="quiz-option" data-correct="false">stop</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Always ensure the condition in a <code>while</code> loop can become <code>False</code>, or use <code>break</code>, to prevent infinite loops that can crash your program.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('ifelse')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('forloops')">Next</button>
+    </div>
+</div>
+
+
+
+<div id="forloops" class="topic">
+    <h2>Python For Loops</h2>
+    <p>A <code>for</code> loop in Python iterates over a sequence (e.g., list, tuple, string, or range) and executes a block of code for each item. It’s ideal when you know the number of iterations or want to process items in a collection.</p>
+
+    <h3>Syntax Overview</h3>
+    <p>The basic structure of a <code>for</code> loop:</p>
+    <ul>
+        <li><strong><code>for item in sequence:</code></strong>: Iterates over each item in the sequence.</li>
+        <li><strong>Loop Body</strong>: Indented code that runs for each iteration.</li>
+        <li><strong>No Manual Update</strong>: Unlike <code>while</code>, the loop variable is automatically updated.</li>
+    </ul>
+
+    <h3>Basic For Loop</h3>
+    <p>Here’s an example iterating over a list:</p>
+    <div class="code-example">
+        <pre><code># Basic for loop with a list
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>apple
+banana
+cherry</pre>
+    </div>
+
+    <h3>For Loop with Range</h3>
+    <p>Use <code>range()</code> to iterate over numbers:</p>
+    <div class="code-example">
+        <pre><code># For loop with range
+for i in range(5):  # 0 to 4
+    print(i)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>0
+1
+2
+3
+4</pre>
+    </div>
+
+    <h3>For Loop with Break</h3>
+    <p>Use <code>break</code> to exit early:</p>
+    <div class="code-example">
+        <pre><code># For loop with break
+for num in range(10):
+    if num == 5:
+        break
+    print(num)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>0
+1
+2
+3
+4</pre>
+    </div>
+
+    <h3>For Loop with Continue</h3>
+    <p>Use <code>continue</code> to skip an iteration:</p>
+    <div class="code-example">
+        <pre><code># For loop with continue
+for num in range(6):
+    if num % 2 == 0:
+        continue
+    print(num)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>1
+3
+5</pre>
+    </div>
+
+    <h3>For Loop with Else</h3>
+    <p>The <code>else</code> block runs when the loop completes normally (no <code>break</code>):</p>
+    <div class="code-example">
+        <pre><code># For loop with else
+for x in range(3):
+    print(f"Number: {x}")
+else:
+    print("Loop finished!")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Number: 0
+Number: 1
+Number: 2
+Loop finished!</pre>
+    </div>
+
+    <h3>Nested For Loops</h3>
+    <p>Iterate over multiple sequences:</p>
+    <div class="code-example">
+        <pre><code># Nested for loops
+colors = ["red", "blue"]
+items = ["shirt", "hat"]
+for color in colors:
+    for item in items:
+        print(f"{color} {item}")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>red shirt
+red hat
+blue shirt
+blue hat</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Write a <code>for</code> loop to print even numbers from 2 to 10 using <code>range()</code>:</p>
+        <textarea class="editor" id="forloops-editor">numbers = [2, 4, 6, 8, 10]
+print(numbers)</textarea>
+        <button class="run-btn" onclick="runCode('forloops-editor', 'forloops-result')">Run Code</button>
+        <div class="result" id="forloops-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What does <code>range(3)</code> generate in a <code>for</code> loop?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">0, 1, 2</div>
+            <div class="quiz-option" data-correct="false">1, 2, 3</div>
+            <div class="quiz-option" data-correct="false">0, 1, 2, 3</div>
+            <div class="quiz-option" data-correct="false">1, 2</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> <code>range(start, stop, step)</code> allows customization—e.g., <code>range(2, 11, 2)</code> generates 2, 4, 6, 8, 10. The stop value is exclusive.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('whileloops')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('functions')">Next</button>
+    </div>
+</div>
+
+
+
+<div id="functions" class="topic">
+    <h2>Python Functions</h2>
+    <p>Functions in Python are reusable blocks of code that perform a specific task. They are defined using the <code>def</code> keyword and can take inputs (parameters), return outputs, and help organize code for better readability and modularity.</p>
+
+    <h3>Syntax Overview</h3>
+    <p>The basic structure of a function:</p>
+    <ul>
+        <li><strong><code>def function_name(parameters):</code></strong>: Defines the function and its parameters.</li>
+        <li><strong>Body</strong>: Indented code that runs when the function is called.</li>
+        <li><strong><code>return</code></strong>: Optional; specifies the output (if omitted, returns <code>None</code>).</li>
+    </ul>
+
+    <h3>Basic Function</h3>
+    <p>Here’s a simple function with no parameters:</p>
+    <div class="code-example">
+        <pre><code># Basic function
+def greet():
+    print("Hello, world!")
+
+greet()  # Call the function</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Hello, world!</pre>
+    </div>
+
+    <h3>Function with Parameters</h3>
+    <p>Pass arguments to a function:</p>
+    <div class="code-example">
+        <pre><code># Function with parameters
+def add_numbers(a, b):
+    sum = a + b
+    return sum
+
+result = add_numbers(3, 5)
+print(result)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>8</pre>
+    </div>
+
+    <h3>Default Parameters</h3>
+    <p>Specify default values for parameters:</p>
+    <div class="code-example">
+        <pre><code># Function with default parameters
+def greet_person(name="Guest"):
+    print(f"Hello, {name}!")
+
+greet_person("Alex")  # With argument
+greet_person()        # Without argument</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Hello, Alex!
+Hello, Guest!</pre>
+    </div>
+
+    <h3>Multiple Return Values</h3>
+    <p>Return multiple values as a tuple:</p>
+    <div class="code-example">
+        <pre><code># Function returning multiple values
+def get_stats(numbers):
+    total = sum(numbers)
+    average = total / len(numbers)
+    return total, average
+
+nums = [1, 2, 3, 4]
+total, avg = get_stats(nums)
+print(f"Total: {total}, Average: {avg}")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Total: 10, Average: 2.5</pre>
+    </div>
+
+    <h3>Keyword Arguments</h3>
+    <p>Use keyword arguments for clarity or to reorder:</p>
+    <div class="code-example">
+        <pre><code># Function with keyword arguments
+def describe_person(name, age, city):
+    print(f"{name} is {age} years old and lives in {city}.")
+
+describe_person(age=25, name="Emma", city="London")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Emma is 25 years old and lives in London.</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Define a function that takes a number and returns its square, then call it with 4:</p>
+        <textarea class="editor" id="functions-editor">def square(num):
+    return num
+
+print(square(2))</textarea>
+        <button class="run-btn" onclick="runCode('functions-editor', 'functions-result')">Run Code</button>
+        <div class="result" id="functions-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What keyword defines a function in Python?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">def</div>
+            <div class="quiz-option" data-correct="false">function</div>
+            <div class="quiz-option" data-correct="false">define</div>
+            <div class="quiz-option" data-correct="false">func</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Functions must be defined before they are called in the code, as Python executes scripts top-to-bottom.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('forloops')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('lambda')">Next</button>
+    </div>
+</div>
+
+
+
+<div id="lambda" class="topic">
+    <h2>Python Lambda</h2>
+    <p>A <code>lambda</code> function in Python is a small, anonymous function defined with the <code>lambda</code> keyword. It can have any number of arguments but only one expression, making it concise and useful for short, one-off operations, especially with functions like <code>map()</code>, <code>filter()</code>, or sorting.</p>
+
+    <h3>Syntax Overview</h3>
+    <p>The structure of a <code>lambda</code> function:</p>
+    <ul>
+        <li><strong><code>lambda arguments: expression</code></strong>: Defines the function inline.</li>
+        <li><strong>Arguments</strong>: Inputs, separated by commas (e.g., <code>x, y</code>).</li>
+        <li><strong>Expression</strong>: Single expression evaluated and returned (no <code>return</code> keyword).</li>
+    </ul>
+
+    <h3>Basic Lambda Function</h3>
+    <p>Here’s a simple lambda function to add two numbers:</p>
+    <div class="code-example">
+        <pre><code># Basic lambda
+add = lambda x, y: x + y
+print(add(3, 5))</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>8</pre>
+    </div>
+
+    <h3>Lambda with Map</h3>
+    <p>Use <code>lambda</code> with <code>map()</code> to apply a function to a sequence:</p>
+    <div class="code-example">
+        <pre><code># Lambda with map
+numbers = [1, 2, 3, 4]
+squares = map(lambda x: x**2, numbers)
+print(list(squares))</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>[1, 4, 9, 16]</pre>
+    </div>
+
+    <h3>Lambda with Filter</h3>
+    <p>Use <code>lambda</code> with <code>filter()</code> to select items:</p>
+    <div class="code-example">
+        <pre><code># Lambda with filter
+numbers = [1, 2, 3, 4, 5, 6]
+evens = filter(lambda x: x % 2 == 0, numbers)
+print(list(evens))</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>[2, 4, 6]</pre>
+    </div>
+
+    <h3>Lambda in Sorting</h3>
+    <p>Use <code>lambda</code> as a key function for custom sorting:</p>
+    <div class="code-example">
+        <pre><code># Lambda in sorting
+pairs = [(1, "one"), (3, "three"), (2, "two")]
+pairs.sort(key=lambda x: x[1])  # Sort by second item (string)
+print(pairs)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>[(1, 'one'), (3, 'three'), (2, 'two')]</pre>
+    </div>
+
+    <h3>Lambda vs. Regular Function</h3>
+    <p>Compare a lambda to a regular function:</p>
+    <div class="code-example">
+        <pre><code># Lambda vs. regular function
+# Regular function
+def multiply(x, y):
+    return x * y
+
+# Lambda equivalent
+mult = lambda x, y: x * y
+
+print(multiply(4, 3))
+print(mult(4, 3))</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>12
+12</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create a <code>lambda</code> function to triple a number and use it with <code>map()</code> on the list <code>[2, 4, 6]</code>:</p>
+        <textarea class="editor" id="lambda-editor">numbers = [2, 4, 6]
+print(numbers)</textarea>
+        <button class="run-btn" onclick="runCode('lambda-editor', 'lambda-result')">Run Code</button>
+        <div class="result" id="lambda-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>How many expressions can a <code>lambda</code> function contain?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">1</div>
+            <div class="quiz-option" data-correct="false">2</div>
+            <div class="quiz-option" data-correct="false">Unlimited</div>
+            <div class="quiz-option" data-correct="false">0</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Lambda functions are best for simple operations; use regular functions for complex logic or readability, as lambdas lack names and docstrings.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('functions')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('arrays')">Next</button>
+    </div>
+</div>
+
+
+
+<div id="arrays" class="topic">
+    <h2>Python Arrays</h2>
+    <p>Python’s <code>array</code> module provides an efficient way to store homogeneous data (items of the same type), unlike lists, which are more flexible but less memory-efficient for large datasets. Arrays are useful for numerical computations where type consistency and performance matter.</p>
+
+    <h3>Array Basics</h3>
+    <p>Key characteristics of arrays from the <code>array</code> module:</p>
+    <ul>
+        <li><strong>Homogeneous</strong>: All elements must be of the same type (e.g., all integers).</li>
+        <li><strong>Mutable</strong>: You can modify elements after creation.</li>
+        <li><strong>Type Codes</strong>: Specify the data type (e.g., <code>'i'</code> for integers, <code>'f'</code> for floats).</li>
+        <li><strong>Efficient</strong>: Uses less memory than lists for large, uniform data.</li>
+    </ul>
+
+    <h3>Creating an Array</h3>
+    <p>Here’s how to create and access an array:</p>
+    <div class="code-example">
+        <pre><code># Creating an array
+import array
+
+numbers = array.array('i', [1, 2, 3, 4])  # 'i' for signed integers
+print(numbers)
+print(numbers[0])  # Access first element
+print(len(numbers))  # Length</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>array('i', [1, 2, 3, 4])
+1
+4</pre>
+    </div>
+
+    <h3>Common Type Codes</h3>
+    <p>Arrays require a type code to define the element type:</p>
+    <table>
+        <tr>
+            <th>Type Code</th>
+            <th>Data Type</th>
+            <th>Example Value</th>
+        </tr>
+        <tr>
+            <td><code>'i'</code></td>
+            <td>Signed integer</td>
+            <td><code>5</code>, <code>-10</code></td>
+        </tr>
+        <tr>
+            <td><code>'f'</code></td>
+            <td>Float</td>
+            <td><code>3.14</code>, <code>-0.5</code></td>
+        </tr>
+        <tr>
+            <td><code>'d'</code></td>
+            <td>Double (float)</td>
+            <td><code>2.718</code></td>
+        </tr>
+        <tr>
+            <td><code>'b'</code></td>
+            <td>Signed char (byte)</td>
+            <td><code>127</code>, <code>-128</code></td>
+        </tr>
+    </table>
+
+    <h3>Array Methods</h3>
+    <p>Here’s an example using array methods:</p>
+    <div class="code-example">
+        <pre><code># Array operations
+import array
+
+nums = array.array('i', [10, 20, 30])
+nums.append(40)         # Add 40
+nums[1] = 25            # Replace second element
+print(nums)
+print(nums.index(30))   # Find index of 30</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>array('i', [10, 25, 30, 40])
+2</pre>
+    </div>
+
+    <h3>Arrays vs. Lists</h3>
+    <p>Compare an array to a list:</p>
+    <div class="code-example">
+        <pre><code># Array vs. list
+import array
+
+list_nums = [1, 2, 3, "four"]       # List: mixed types
+array_nums = array.array('i', [1, 2, 3])  # Array: integers only
+print(list_nums)
+print(array_nums)
+# array_nums.append("four")  # Would raise TypeError</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>[1, 2, 3, 'four']
+array('i', [1, 2, 3])</pre>
+    </div>
+
+    <h3>Using Arrays with Loops</h3>
+    <p>Iterate over an array like a list:</p>
+    <div class="code-example">
+        <pre><code># Loop over an array
+import array
+
+values = array.array('f', [1.5, 2.5, 3.5])
+for val in values:
+    print(val * 2)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>3.0
+5.0
+7.0</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create an array of integers <code>[5, 10, 15]</code>, add 20, then print the array:</p>
+        <textarea class="editor" id="arrays-editor">import array
+
+nums = [5, 10, 15]
+print(nums)</textarea>
+        <button class="run-btn" onclick="runCode('arrays-editor', 'arrays-result')">Run Code</button>
+        <div class="result" id="arrays-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What module must you import to use Python’s <code>array</code> type?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">array</div>
+            <div class="quiz-option" data-correct="false">list</div>
+            <div class="quiz-option" data-correct="false">arrays</div>
+            <div class="quiz-option" data-correct="false">collections</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> For most general purposes, lists are sufficient. Use the <code>array</code> module when memory efficiency or type restriction is critical, or consider <code>numpy</code> arrays for advanced numerical work.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('lambda')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('classes')">Next</button>
+    </div>
+</div>
+
+
+
+
+<div id="classes" class="topic">
+    <h2>Python Classes/Objects</h2>
+    <p>Classes in Python are blueprints for creating objects, enabling object-oriented programming (OOP). Objects are instances of classes, bundling data (attributes) and behavior (methods) together to model real-world entities.</p>
+
+    <h3>Class Basics</h3>
+    <p>Key concepts of classes and objects:</p>
+    <ul>
+        <li><strong><code>class</code></strong>: Defines the structure and behavior of objects.</li>
+        <li><strong>Object</strong>: An instance of a class, created using the class name.</li>
+        <li><strong>Attributes</strong>: Variables that store data (e.g., <code>self.name</code>).</li>
+        <li><strong>Methods</strong>: Functions defined in a class that operate on its objects.</li>
+    </ul>
+
+    <h3>Creating a Class and Object</h3>
+    <p>Here’s a simple class with an object:</p>
+    <div class="code-example">
+        <pre><code># Basic class and object
+class Dog:
+    def bark(self):
+        print("Woof!")
+
+my_dog = Dog()  # Create an object
+my_dog.bark()   # Call method</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Woof!</pre>
+    </div>
+
+    <h3>Class with Attributes</h3>
+    <p>Use <code>__init__</code> to initialize attributes:</p>
+    <div class="code-example">
+        <pre><code># Class with attributes
+class Person:
+    def __init__(self, name, age):
+        self.name = name  # Instance attribute
+        self.age = age
+
+    def introduce(self):
+        print(f"Hi, I’m {self.name} and I’m {self.age} years old.")
+
+person1 = Person("Alex", 25)
+person1.introduce()</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Hi, I’m Alex and I’m 25 years old.</pre>
+    </div>
+
+    <h3>Modifying Objects</h3>
+    <p>Objects can be modified after creation:</p>
+    <div class="code-example">
+        <pre><code># Modifying object attributes
+class Car:
+    def __init__(self, color):
+        self.color = color
+
+my_car = Car("blue")
+print(my_car.color)
+my_car.color = "red"  # Modify attribute
+print(my_car.color)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>blue
+red</pre>
+    </div>
+
+    <h3>Class with Multiple Methods</h3>
+    <p>Define multiple methods for richer behavior:</p>
+    <div class="code-example">
+        <pre><code># Multiple methods
+class Student:
+    def __init__(self, name, grade):
+        self.name = name
+        self.grade = grade
+
+    def study(self):
+        print(f"{self.name} is studying.")
+
+    def pass_exam(self):
+        self.grade = "A"
+        print(f"{self.name} passed and now has grade {self.grade}.")
+
+student = Student("Emma", "B")
+student.study()
+student.pass_exam()</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Emma is studying.
+Emma passed and now has grade A.</pre>
+    </div>
+
+    <h3>Class Variables</h3>
+    <p>Share data across all instances with class variables:</p>
+    <div class="code-example">
+        <pre><code># Class variable
+class Animal:
+    species_count = 0  # Class variable
+
+    def __init__(self, name):
+        self.name = name
+        Animal.species_count += 1
+
+dog = Animal("Buddy")
+cat = Animal("Whiskers")
+print(f"Total animals: {Animal.species_count}")</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Total animals: 2</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create a <code>Book</code> class with <code>title</code> and <code>pages</code> attributes, and a method to print the title. Create an object and call the method:</p>
+        <textarea class="editor" id="classes-editor">class Book:
+    pass
+
+print("Hello")</textarea>
+        <button class="run-btn" onclick="runCode('classes-editor', 'classes-result')">Run Code</button>
+        <div class="result" id="classes-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What method is automatically called when creating an object?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">__init__</div>
+            <div class="quiz-option" data-correct="false">__start__</div>
+            <div class="quiz-option" data-correct="false">create</div>
+            <div class="quiz-option" data-correct="false">init</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> The <code>self</code> parameter is required in method definitions to refer to the instance, though you call methods without passing it explicitly.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('arrays')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('inheritance')">Next</button>
+    </div>
+</div>
+
+
+<div id="inheritance" class="topic">
+    <h2>Python Inheritance</h2>
+    <p>Inheritance in Python allows a class (child class) to inherit attributes and methods from another class (parent class). This promotes code reuse and establishes a hierarchical relationship between classes, a key feature of object-oriented programming (OOP).</p>
+
+    <h3>Inheritance Basics</h3>
+    <p>Key concepts of inheritance:</p>
+    <ul>
+        <li><strong>Parent Class</strong>: The class being inherited from (base or superclass).</li>
+        <li><strong>Child Class</strong>: The class that inherits (derived or subclass).</li>
+        <li><strong>Override</strong>: Child classes can redefine parent methods.</li>
+        <li><strong><code>super()</code></strong>: Calls parent class methods from the child class.</li>
+    </ul>
+
+    <h3>Basic Inheritance</h3>
+    <p>Here’s a simple example of inheritance:</p>
+    <div class="code-example">
+        <pre><code># Basic inheritance
+class Animal:
+    def speak(self):
+        print("I make a sound.")
+
+class Dog(Animal):  # Inherits from Animal
+    pass
+
+my_dog = Dog()
+my_dog.speak()</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>I make a sound.</pre>
+    </div>
+
+    <h3>Overriding Methods</h3>
+    <p>Child classes can override parent methods:</p>
+    <div class="code-example">
+        <pre><code># Method overriding
+class Animal:
+    def speak(self):
+        print("I make a sound.")
+
+class Cat(Animal):
+    def speak(self):  # Overrides parent method
+        print("Meow!")
+
+my_cat = Cat()
+my_cat.speak()</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Meow!</pre>
+    </div>
+
+    <h3>Using super()</h3>
+    <p>Use <code>super()</code> to extend parent functionality:</p>
+    <div class="code-example">
+        <pre><code># Using super()
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def introduce(self):
+        print(f"Hi, I’m {self.name}.")
+
+class Student(Person):
+    def __init__(self, name, grade):
+        super().__init__(name)  # Call parent’s __init__
+        self.grade = grade
+
+    def introduce(self):  # Extend parent method
+        super().introduce()
+        print(f"I’m a student with grade {self.grade}.")
+
+student = Student("Emma", "A")
+student.introduce()</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Hi, I’m Emma.
+I’m a student with grade A.</pre>
+    </div>
+
+    <h3>Multiple Inheritance</h3>
+    <p>A class can inherit from multiple parent classes:</p>
+    <div class="code-example">
+        <pre><code># Multiple inheritance
+class Flyer:
+    def fly(self):
+        print("I can fly!")
+
+class Swimmer:
+    def swim(self):
+        print("I can swim!")
+
+class Duck(Flyer, Swimmer):  # Inherits from both
+    def quack(self):
+        print("Quack!")
+
+duck = Duck()
+duck.fly()
+duck.swim()
+duck.quack()</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>I can fly!
+I can swim!
+Quack!</pre>
+    </div>
+
+    <h3>Inheritance with Attributes</h3>
+    <p>Inherit and add attributes:</p>
+    <div class="code-example">
+        <pre><code># Inheritance with attributes
+class Vehicle:
+    def __init__(self, brand):
+        self.brand = brand
+
+class Car(Vehicle):
+    def __init__(self, brand, model):
+        super().__init__(brand)
+        self.model = model
+
+    def info(self):
+        print(f"{self.brand} {self.model}")
+
+my_car = Car("Toyota", "Camry")
+my_car.info()</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Toyota Camry</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create a <code>Bird</code> parent class with a <code>sing</code> method, and a <code>Parrot</code> child class that overrides it to print "Squawk!":</p>
+        <textarea class="editor" id="inheritance-editor">class Bird:
+    pass
+
+print("Chirp!")</textarea>
+        <button class="run-btn" onclick="runCode('inheritance-editor', 'inheritance-result')">Run Code</button>
+        <div class="result" id="inheritance-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What function is used to call a parent class’s method?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">super()</div>
+            <div class="quiz-option" data-correct="false">parent()</div>
+            <div class="quiz-option" data-correct="false">base()</div>
+            <div class="quiz-option" data-correct="false">inherit()</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> In multiple inheritance, the method resolution order (MRO) determines which parent method is called if there’s a conflict—use <code>ClassName.mro()</code> to inspect it.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('classes')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('iterators')">Next</button>
+    </div>
+</div>
+
+
+
+<div id="iterators" class="topic">
+    <h2>Python Iterators</h2>
+    <p>Iterators in Python are objects that allow you to traverse through a sequence of items (e.g., lists, tuples) one at a time. They implement the iterator protocol with <code>__iter__()</code> and <code>__next__()</code> methods, powering <code>for</code> loops and other iteration tools.</p>
+
+    <h3>Iterator Basics</h3>
+    <p>Key concepts of iterators:</p>
+    <ul>
+        <li><strong>Iterable</strong>: An object that can return an iterator (e.g., lists, strings).</li>
+        <li><strong>Iterator</strong>: An object with <code>__next__()</code> to fetch the next item.</li>
+        <li><strong><code>iter()</code></strong>: Returns an iterator from an iterable.</li>
+        <li><strong><code>next()</code></strong>: Retrieves the next item, raising <code>StopIteration</code> when done.</li>
+    </ul>
+
+    <h3>Using Built-in Iterators</h3>
+    <p>Here’s how to manually iterate over a list:</p>
+    <div class="code-example">
+        <pre><code># Using iter() and next()
+fruits = ["apple", "banana", "cherry"]
+iterator = iter(fruits)  # Get iterator
+print(next(iterator))    # First item
+print(next(iterator))    # Second item
+print(next(iterator))    # Third item</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>apple
+banana
+cherry</pre>
+    </div>
+
+    <h3>Custom Iterator Class</h3>
+    <p>Create your own iterator with a class:</p>
+    <div class="code-example">
+        <pre><code># Custom iterator
+class NumberSequence:
+    def __init__(self, max_num):
+        self.max = max_num
+        self.current = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current < self.max:
+            self.current += 1
+            return self.current
+        raise StopIteration
+
+nums = NumberSequence(3)
+for num in nums:
+    print(num)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>1
+2
+3</pre>
+    </div>
+
+    <h3>Iterator with StopIteration</h3>
+    <p>Handle <code>StopIteration</code> manually:</p>
+    <div class="code-example">
+        <pre><code># Manual iteration with StopIteration
+colors = ["red", "blue"]
+iterator = iter(colors)
+while True:
+    try:
+        print(next(iterator))
+    except StopIteration:
+        break</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>red
+blue</pre>
+    </div>
+
+    <h3>Infinite Iterator</h3>
+    <p>Create an infinite iterator (use with caution):</p>
+    <div class="code-example">
+        <pre><code># Infinite iterator
+class InfiniteNumbers:
+    def __init__(self):
+        self.num = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.num += 1
+        return self.num
+
+infinite = InfiniteNumbers()
+iterator = iter(infinite)
+for _ in range(5):  # Limit to 5 iterations
+    print(next(iterator))</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>1
+2
+3
+4
+5</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create an iterator class <code>EvenNumbers</code> that returns even numbers up to 10:</p>
+        <textarea class="editor" id="iterators-editor">class EvenNumbers:
+    pass
+
+print("Hello")</textarea>
+        <button class="run-btn" onclick="runCode('iterators-editor', 'iterators-result')">Run Code</button>
+        <div class="result" id="iterators-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What exception is raised when an iterator has no more items?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">StopIteration</div>
+            <div class="quiz-option" data-correct="false">IndexError</div>
+            <div class="quiz-option" data-correct="false">ValueError</div>
+            <div class="quiz-option" data-correct="false">EndOfLoop</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Most Python built-ins (e.g., lists, tuples) are iterables, and <code>for</code> loops automatically handle iterators behind the scenes.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('inheritance')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('modules')">Next</button>
+    </div>
+</div>
+
+
+<div id="polymorphism" class="topic">
+    <h2>Python Polymorphism</h2>
+    <p>Polymorphism in Python is the ability of different objects to be treated as instances of a common interface or superclass, despite having different implementations. It’s a core principle of object-oriented programming (OOP) that enhances flexibility and code reusability, often achieved through method overriding or duck typing.</p>
+
+    <h3>Polymorphism Basics</h3>
+    <p>Key concepts of polymorphism:</p>
+    <ul>
+        <li><strong>Method Overriding</strong>: Child classes redefine parent methods differently.</li>
+        <li><strong>Duck Typing</strong>: Objects are used based on their methods, not their type ("If it walks like a duck and talks like a duck, it’s a duck").</li>
+        <li><strong>Common Interface</strong>: A shared method name allows uniform handling of diverse objects.</li>
+    </ul>
+
+    <h3>Polymorphism with Inheritance</h3>
+    <p>Here’s an example using method overriding:</p>
+    <div class="code-example">
+        <pre><code># Polymorphism with inheritance
+class Animal:
+    def speak(self):
+        print("I make a sound.")
+
+class Dog(Animal):
+    def speak(self):
+        print("Woof!")
+
+class Cat(Animal):
+    def speak(self):
+        print("Meow!")
+
+animals = [Dog(), Cat()]
+for animal in animals:
+    animal.speak()  # Same method, different outputs</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>Woof!
+Meow!</pre>
+    </div>
+
+    <h3>Duck Typing</h3>
+    <p>Polymorphism without inheritance using duck typing:</p>
+    <div class="code-example">
+        <pre><code># Duck typing
+class Bird:
+    def fly(self):
+        print("I soar in the sky.")
+
+class Airplane:
+    def fly(self):
+        print("I fly with engines.")
+
+def make_it_fly(flyer):
+    flyer.fly()  # Works if object has fly() method
+
+bird = Bird()
+plane = Airplane()
+make_it_fly(bird)
+make_it_fly(plane)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>I soar in the sky.
+I fly with engines.</pre>
+    </div>
+
+    <h3>Polymorphism with Functions</h3>
+    <p>Use polymorphism with built-in functions:</p>
+    <div class="code-example">
+        <pre><code># Polymorphism with len()
+class Team:
+    def __init__(self, members):
+        self.members = members
+
+    def __len__(self):
+        return len(self.members)
+
+class Inventory:
+    def __init__(self, items):
+        self.items = items
+
+    def __len__(self):
+        return len(self.items)
+
+team = Team(["Alex", "Bob"])
+inventory = Inventory([1, 2, 3, 4])
+print(len(team))      # Calls team.__len__
+print(len(inventory)) # Calls inventory.__len__</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>2
+4</pre>
+    </div>
+
+    <h3>Polymorphism with Operator Overloading</h3>
+    <p>Redefine operators for custom classes:</p>
+    <div class="code-example">
+        <pre><code># Operator overloading
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+p1 = Point(1, 2)
+p2 = Point(3, 4)
+p3 = p1 + p2  # Uses __add__
+print(p3)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>(4, 6)</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create a <code>Shape</code> parent class with a <code>draw</code> method, and <code>Circle</code> and <code>Square</code> child classes that override it. Iterate over a list of shapes to call <code>draw</code>:</p>
+        <textarea class="editor" id="polymorphism-editor">class Shape:
+    pass
+
+print("Drawing")</textarea>
+        <button class="run-btn" onclick="runCode('polymorphism-editor', 'polymorphism-result')">Run Code</button>
+        <div class="result" id="polymorphism-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What concept allows Python to call methods based on their presence, not class type?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">Duck Typing</div>
+            <div class="quiz-option" data-correct="false">Method Overriding</div>
+            <div class="quiz-option" data-correct="false">Inheritance</div>
+            <div class="quiz-option" data-correct="false">Super Call</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Polymorphism in Python is dynamic and flexible due to its lack of strict type checking—focus on what an object can do, not what it is.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('iterators')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('modules')">Next</button>
+    </div>
+</div>
+
+
+
+
+<div id="scope" class="topic">
+    <h2>Python Scope</h2>
+    <p>Scope in Python determines the accessibility of variables within different parts of your code. Python follows the LEGB rule (Local, Enclosing, Global, Built-in) to resolve variable names, affecting how and where variables can be used or modified.</p>
+
+    <h3>Scope Basics</h3>
+    <p>Key concepts of scope:</p>
+    <ul>
+        <li><strong>Local Scope</strong>: Variables defined inside a function, accessible only there.</li>
+        <li><strong>Enclosing Scope</strong>: Variables in outer functions (for nested functions).</li>
+        <li><strong>Global Scope</strong>: Variables defined at the top level, accessible everywhere.</li>
+        <li><strong>Built-in Scope</strong>: Predefined names like <code>print</code> or <code>len</code>.</li>
+    </ul>
+
+    <h3>Local Scope</h3>
+    <p>Variables inside a function are local:</p>
+    <div class="code-example">
+        <pre><code># Local scope
+def my_function():
+    x = 10  # Local variable
+    print(x)
+
+my_function()
+# print(x)  # Error: x is not defined outside</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>10</pre>
+    </div>
+
+    <h3>Global Scope</h3>
+    <p>Variables outside functions are global:</p>
+    <div class="code-example">
+        <pre><code># Global scope
+y = 20  # Global variable
+def show_global():
+    print(y)
+
+show_global()
+print(y)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>20
+20</pre>
+    </div>
+
+    <h3>Global Keyword</h3>
+    <p>Use <code>global</code> to modify a global variable inside a function:</p>
+    <div class="code-example">
+        <pre><code># Using global keyword
+count = 0
+def increment():
+    global count  # Declare count as global
+    count += 1
+
+increment()
+print(count)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>1</pre>
+    </div>
+
+    <h3>Enclosing Scope (Nonlocal)</h3>
+    <p>Use <code>nonlocal</code> for variables in an enclosing function:</p>
+    <div class="code-example">
+        <pre><code># Enclosing scope with nonlocal
+def outer():
+    z = 5
+    def inner():
+        nonlocal z  # Access enclosing scope
+        z += 1
+        print(z)
+    inner()
+    print(z)
+
+outer()</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>6
+6</pre>
+    </div>
+
+    <h3>LEGB Rule Example</h3>
+    <p>Demonstrate the LEGB lookup order:</p>
+    <div class="code-example">
+        <pre><code># LEGB rule
+x = "global"  # Global scope
+def outer():
+    x = "enclosing"  # Enclosing scope
+    def inner():
+        x = "local"  # Local scope
+        print(x)
+    inner()
+    print(x)
+
+outer()
+print(x)</code></pre>
+    </div>
+    <div class="example-output">
+        <h4>Output:</h4>
+        <pre>local
+enclosing
+global</pre>
+    </div>
+
+    <div class="try-it-yourself">
+        <h3>Try it Yourself</h3>
+        <p>Create a function that defines a local variable <code>num = 50</code>, and a nested function that uses <code>nonlocal</code> to modify it to 100. Print <code>num</code> from both functions:</p>
+        <textarea class="editor" id="scope-editor">def outer():
+    pass
+
+print("Test")</textarea>
+        <button class="run-btn" onclick="runCode('scope-editor', 'scope-result')">Run Code</button>
+        <div class="result" id="scope-result"></div>
+    </div>
+
+    <div class="quiz-container">
+        <h3>Quick Quiz</h3>
+        <p>What keyword lets you modify an enclosing scope variable in a nested function?</p>
+        <div class="quiz-options">
+            <div class="quiz-option" data-correct="true">nonlocal</div>
+            <div class="quiz-option" data-correct="false">global</div>
+            <div class="quiz-option" data-correct="false">local</div>
+            <div class="quiz-option" data-correct="false">enclosing</div>
+        </div>
+        <button class="check-answer-btn" onclick="checkAnswer(this)">Check Answer</button>
+        <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="note">
+        <p><strong>Note:</strong> Avoid overusing <code>global</code> or <code>nonlocal</code>—they can make code harder to debug. Prefer passing variables as arguments or returning values.</p>
+    </div>
+
+    <div class="topic-navigation">
+        <button class="nav-btn prev-btn" onclick="navigateTopic('polymorphism')">Previous</button>
+        <button class="nav-btn next-btn" onclick="navigateTopic('modules')">Next</button>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+            <!-- Add all other topics following this pattern -->
+        </div>
+    </div>
+
+    <script>
+        // Same JavaScript as your HTML course, adapted for Python
+       // Global variables
+let currentTopic = 'home';
+const totalTopics = document.querySelectorAll('.topic').length;
+
+// Navigate to a specific topic
+function navigateTopic(topicId) {
+    // Hide current topic and show the new one
+    document.getElementById(currentTopic).classList.remove('active');
+    document.getElementById(topicId).classList.add('active');
+
+    // Update sidebar active state
+    document.querySelector(`li[data-topic="${currentTopic}"]`).classList.remove('active');
+    document.querySelector(`li[data-topic="${topicId}"]`).classList.add('active');
+
+    // Update current topic and scroll to top
+    currentTopic = topicId;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Update progress bar
+    updateProgressBar();
+}
+
+// Update the progress bar based on current topic
+function updateProgressBar() {
+    const topicsList = document.querySelectorAll('#topic-list li');
+    const currentIndex = Array.from(topicsList).findIndex(li => li.dataset.topic === currentTopic);
+    const progressPercentage = ((currentIndex + 1) / totalTopics) * 100;
+    document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+}
+
+// Simulate running Python code (displays code as output)
+function runCode(editorId, resultId) {
+    const code = document.getElementById(editorId).value;
+    const resultElement = document.getElementById(resultId);
+    
+    // Basic simulation of Python output (for demonstration purposes)
+    let simulatedOutput = '';
+    try {
+        // Simple heuristic to simulate print statements
+        const lines = code.split('\n');
+        lines.forEach(line => {
+            if (line.trim().startsWith('print(')) {
+                const content = line.match(/print\((.*)\)/);
+                if (content && content[1]) {
+                    let output = content[1].replace(/["'](.*)["']/, '$1'); // Strip quotes
+                    // Handle f-strings (basic simulation)
+                    if (output.includes('{') && output.includes('}')) {
+                        const variables = code.match(/(\w+)\s*=\s*(.+)/g) || [];
+                        variables.forEach(varLine => {
+                            const [varName, varValue] = varLine.split('=').map(s => s.trim());
+                            output = output.replace(`{${varName}}`, varValue);
+                        });
+                    }
+                    simulatedOutput += output + '\n';
+                }
+            }
+        });
+        resultElement.innerHTML = `<pre>${simulatedOutput || 'Code executed. No output generated.'}</pre>`;
+    } catch (error) {
+        resultElement.innerHTML = `<pre>Error: Unable to simulate output. Please check your code.</pre>`;
+    }
+}
+
+// Check quiz answers
+function checkAnswer(button) {
+    const quizContainer = button.closest('.quiz-container');
+    const selectedOption = quizContainer.querySelector('.quiz-option.selected');
+    const feedbackElement = quizContainer.querySelector('.quiz-feedback');
+
+    if (!selectedOption) {
+        feedbackElement.textContent = 'Please select an answer.';
+        feedbackElement.className = 'quiz-feedback incorrect';
+        return;
+    }
+
+    const isCorrect = selectedOption.getAttribute('data-correct') === 'true';
+    quizContainer.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.classList.remove('correct', 'incorrect');
+    });
+
+    if (isCorrect) {
+        selectedOption.classList.add('correct');
+        feedbackElement.textContent = 'Correct! Well done!';
+        feedbackElement.className = 'quiz-feedback correct';
+    } else {
+        selectedOption.classList.add('incorrect');
+        feedbackElement.textContent = 'Incorrect. Review the material and try again!';
+        feedbackElement.className = 'quiz-feedback incorrect';
+        // Highlight the correct answer
+        quizContainer.querySelector('.quiz-option[data-correct="true"]').classList.add('correct');
+    }
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Sidebar toggle for mobile
+    document.getElementById('sidebar-toggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('active');
+    });
+
+    // Dark mode toggle
+    document.getElementById('dark-mode-toggle').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.body.classList.toggle('dark-mode');
+        this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    });
+
+    // Restore dark mode preference
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('dark-mode-toggle').textContent = 'Light Mode';
+    }
+
+    // Sidebar topic navigation
+    document.querySelectorAll('#topic-list li').forEach(li => {
+        li.addEventListener('click', function() {
+            navigateTopic(this.getAttribute('data-topic'));
+        });
+    });
+
+    // Quiz option selection
+    document.querySelectorAll('.quiz-option').forEach(option => {
+        option.addEventListener('click', function() {
+            const quizContainer = this.closest('.quiz-container');
+            quizContainer.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            quizContainer.querySelector('.quiz-feedback').className = 'quiz-feedback'; // Reset feedback
+        });
+    });
+
+    // Initialize progress bar
+    updateProgressBar();
+});
+    </script>
+</body>
+</html>
