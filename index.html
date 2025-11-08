@@ -86,7 +86,7 @@
         <h2 class="section-title">Contact Us</h2>
         <div class="contact-container">
             <div class="contact-form">
-                <!-- Form now uses client-side JS to POST to backend /api/contact -->
+                <!-- Form handled by scripts.js to open user's mail client via mailto: -->
                 <form id="contactForm" novalidate>
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -104,9 +104,7 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
-                  <a href="mailto:bhargavandhe202@gmail.com">
                     <button type="submit" class="submit-btn">Send Message</button>
-                  </a>
                     <!-- feedback message -->
                     <p id="formFeedback" aria-live="polite" style="margin-top:10px;"></p>
                 </form>
@@ -175,4 +173,3 @@
     <script src="scripts.js"></script>
 </body>
 </html>
-
